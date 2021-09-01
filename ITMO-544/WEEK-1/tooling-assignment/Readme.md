@@ -54,6 +54,8 @@ After installing an IDE editor of your choice, pick one of the listed or you can
   * Cross Platform development tool from Adobe
 * Or any other IDE that has native Git integration
 
+![VS Code version](./images/vscode-version.png "VS Code Version")
+
 ## Packer Managers for MacOS
 
 Brew is the MacOS 3rd party package manager located at: [https://brew.sh/](https://brew.sh/ "brew installer page"). Place a screenshot of the output of ```brew --version```.
