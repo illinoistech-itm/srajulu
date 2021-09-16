@@ -73,9 +73,44 @@
 
 * Approach 1: contacting the server and deleting it from storage: 
 
-150ms for data transfer both ways.
-Average size of email is 75 KB,  30 ms to read
-Time for seek (best case scenario 1 seek) 10ms
+    150ms for data transfer both ways.
+
+    Average size of email is 75 KB,  30 ms to read
+
+    Time for seek 30ms
+
+    Total time : 210 ms
+
+* Approach 2: Mark the message as deleted in index
+
+    150ms for data transfer both ways.
+
+    Index lookup : 60ms 
+
+    Time for seek 30ms
+
+    Total time: 240ms
+
+*   Approach 3: Asynchronous design
+
+    150ms for data transfer both ways.
+
+    Index lookup : 10ms 
+
+    Average size of email is 75 KB,  30 ms to read
+
+    Time for seek 30ms
+
+    Total time: 210 ms
+
+
+
+
+
+
+
+
+
 
 
 
