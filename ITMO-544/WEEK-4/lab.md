@@ -13,18 +13,26 @@ following:
   * Screenshot the output of the command: `aws --version`
   * Only one screenshot is needed to show both deliverables
 
+![Host name change and aws version](./media/hostname-aws-version.png)
+
 ## Part 2
 
 * Upon successfully created and AWS account, using the IAM (Identity and Access Management), create a non-root account for use during this class.
-  * Take a screenshot of the management console of you logged into this non-root account
+  * Take a screenshot of the management console of you logged into this non-root account.
+
+![AWS console](./media/iam-account-gui.png)
 
 ## Part 3
 
 * Once the AWS CLI tools are installed, using AWS credentials you will launch an EC2 instance via the AWS CLI tools
   * Screenshot the command to launch the EC2 instance
+  ![Launching EC2 instance](./media/command-run-instances.png)
   * Screenshot the command to check the status of the EC2 instance (Show it is running)
+  ![Live instance](./media/instance-running.png)
   * Screenshot the command to destroy the EC2 instance
+  ![Terminate instance command](./media/terminate-instance-command.png)
   * Screenshot the command to check the status of the EC2 instance (Show it is terminating or terminated)
+  ![Instance terminated](./media/instance-terminate.png)
 
 ### Deliverable
 
