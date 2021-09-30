@@ -24,4 +24,6 @@ Create a folder named: week-03 under your class folder in the provided private r
 * destroy-env.sh
   * This script will terminate all infrastructure you have created
 
+![Scripts working](./media/working-scripts.png)
+
 Submit the URL to the week-03 folder to Blackboard
