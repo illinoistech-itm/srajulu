@@ -11,6 +11,8 @@
 
 At the conclusion of this Lab you will have successfully deployed and destroyed a single-tier cloud application via the AWS CLI and using positional parameters in a shell script.  You will have configured your application to use AWS CLI Filters and Queries to retrieve dynamic data about ephemeral instances.
 
+ ![Shell Scripts working](./media/shell-scripts-working.png)
+
 ## Assumptions
 
 For this assignment you can make these assumptions
