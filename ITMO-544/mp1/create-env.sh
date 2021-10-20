@@ -3,7 +3,20 @@
 # Make extensive use of: https://awscli.amazonaws.com/v2/documentation/api/latest/reference/index.html
 # Adding URLs of the syntax above each command
 
-aws ec2 run-instances --image-id $1 --instance-type $2 --count $3 --subnet-id $4 --key-name $5 --security-group-ids $6 --user-data $7
+SGID=$(aws ec2 describe-security-groups --query 'SecurityGroups[0].GroupId')
+#SUBNETIDS=$(aws ec2 describe-subnets --query "Subnets[0:2:1].SubnetId")
+
+SUBNETID1=$(aws ec2 describe-subnets --query "Subnets[0].SubnetId")
+SUBNETID2=$(aws ec2 describe-subnets --query "Subnets[1].SubnetId")
+
+aws ec2 run-instances \
+    --image-id $1 \
+    --instance-type $2 \
+    --count $3 \
+    --subnet-id $SUBNETID1\
+    --key-name $4 \
+    --security-group-ids 
+    --user-data $5
 
 # Need Code to create Target Groups and then dynamically attach instances (3) in this example
 # Need Code to register Targets to Target Group (your instance IDs)
