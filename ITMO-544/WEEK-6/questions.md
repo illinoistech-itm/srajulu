@@ -11,11 +11,10 @@
 
 3. Describe the common web service architectures, in order from smallest to largest.
 * The common web service architectures are:
-    * Single-machine web server architecture
-    * Three-tier web architecture
-    * Four-tier web service architecture
-    * Message Bus architecture
-    * Service-Oriented architecture
+    * Single-tier
+    * Three-tier
+    * Four-tier
+    * Cloud tier
 
 
 4. Describe how different local load balancer types work and what their pros and cons are. You may choose to make a comparison chart.
@@ -29,6 +28,7 @@
     * All cookie processing, session pipelining, compression, and encryption are handled by the frontends.
     * Frontend software can keep track of the ever-changing HTTP protocol definition, relieving application servers of this burden.
     * Frontends handle everything related to users logging in and out.
+    * In this pattern, web requests come in as usual to the load balancer, which divides the traffic among the various frontends.
 
 7. What does a reverse proxy do? When is it needed?
 * A reverse proxy allows one web server to transparently serve content from another web server. The user perceives a single cohesive web site, despite the fact that it is made up of a patchwork of applications. Requests are routed to the reverse proxy, which parses the URL and retrieves the necessary pages from the appropriate server or service. This outcome is then communicated to the original requester.

@@ -4,7 +4,7 @@
 * Scaling in easier term refer to increase in size, scaling in distributed system is to increase the system hardware configuration either in better performing euipments or in numbers. Scaling a system is done to meet the traffic requirements.
 
 2. What are the options for scaling a service that is CPU bound?
-* Scaling up or Vertical Scaling, either of the option can be used to meet desired level of performance, when scaling up  as the traffic grows or reduces according to time or events to meet the performance level.
+* Scaling up or Vertical Scaling, either of the option can be used to meet desired level of performance, we can also buy more hardware and re-engineer and re-factor when scaling up  as the traffic grows or reduces according to time or events to meet the performance level.
 
 3. What are the options for scaling a service whose storage requirements are growing?
 * Selecting a scaling method depends on the scenario, the service can be scaled in one or in a combination of x, y, and z axes of the AFK cube, or might simply scale up if it would staisfy the number of users using the service. For example the service can be scaled in x axis if the content is audio, video, etc, i.e static content. The service can be scaled in y axis in combination with x axis for scaling and to serve a larger number of users.
