@@ -1,0 +1,6 @@
+ami-00399ec92321828f5
+t2.micro
+3
+linux-itmo-vbox-script
+file://install-env.sh
+tg-sgr-mp1
