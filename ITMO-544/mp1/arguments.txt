@@ -4,3 +4,4 @@ t2.micro
 linux-itmo-vbox-script
 file://install-env.sh
 tg-sgr-mp1
+elb-sgr-mp1
