@@ -8,6 +8,8 @@ IDS=$(aws ec2 describe-instances --query 'Reservations[*].Instances[?State.Code=
 
 aws ec2 terminate-instances --instance-ids $IDS
 
+#remove target groupss
+
 # Need code to dynamically terminate RDS instances
 
 # Need code to dynamically detach instances from targets and then terminate target groups 
