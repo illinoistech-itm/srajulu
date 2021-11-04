@@ -25,8 +25,8 @@ IDS=$(aws ec2 run-instances \
     --count $3 \
     --subnet-id $SUBNETID1\
     --key-name $4 \
-    --security-group-ids $SGID
-    --user-data $5]
+    --security-group-ids $SGID \
+    --user-data $5 \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=mini-project,Value=mp1}]')
 
 IDSARRAY=($( aws ec2 describe-instances --query 'Reservations[].Instances[*].InstanceId' --output text))
