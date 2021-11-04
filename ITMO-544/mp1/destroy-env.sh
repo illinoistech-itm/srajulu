@@ -4,8 +4,10 @@
 # Adding URLs of the syntax above each command
 
 # Example Script to dynamically terminate all running EC2 instances
-IDSARRAY=$(aws ec2 describe-instances --query 'Reservations[*].Instances[?State.Code==`16`].InstanceId' --output text)
+#IDSARRAY=$(aws ec2 describe-instances --query 'Reservations[*].Instances[?State.Code==`16`].InstanceId' --output text)
 
+#Filter to fetch running instances with tag value "mp1"
+IDSARRAY=$(aws ec2 describe-instances --query 'Reservations[*].Instances[?State.Name==`running` && Tags[?Value==`mp1`]].InstanceId')
 aws ec2 terminate-instances --instance-ids $IDSARRAY
 
 #remove target groupss
