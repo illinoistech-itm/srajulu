@@ -4,7 +4,7 @@
 # Adding URLs of the syntax above each command
 
 # Fetching required values
-VPCID=$(aws ec2 describe-vpcs --query 'Vpcs[0].VpcId')
+
 
 SGID=$(aws ec2 describe-security-groups --query 'SecurityGroups[0].GroupId')
 #SUBNETIDS=$(aws ec2 describe-subnets --query "Subnets[0:2:1].SubnetId")
@@ -17,7 +17,7 @@ echo $SUBNETID2
 
 #Using arrays for subnetids
 SUBNETARRAY=($(aws ec2 describe-subnets --query "Subnets[*].SubnetId" --output text))
-echo ${SUBNETARRAY[0]}
+#echo ${SUBNETARRAY[0]}
 
 IDS=$(aws ec2 run-instances \
     --image-id $1 \
@@ -26,17 +26,25 @@ IDS=$(aws ec2 run-instances \
     --subnet-id $SUBNETID1\
     --key-name $4 \
     --security-group-ids $SGID
-    --user-data $5)
+    --user-data $5]
+    --tag-specifications 'ResourceType=instance,Tags=[{Key=mini-project,Value=mp1}]')
 
-IDSARRAY=($(echo $IDS))
+IDSARRAY=($( aws ec2 describe-instances --query 'Reservations[].Instances[*].InstanceId' --output text))
+echo "Instances created successfully:" 
+echo ${IDSARRAY[@]}
+
 
 # AWS EC2 Waiters
 aws ec2 wait instance-running \
-    --instance-ids $IDS
+    --instance-ids ${IDSARRAY[@]}
+
+echo "Intances are up and running"
 
 
+#Commented out for testing
+:' 
 # Need Code to create Target Groups and then dynamically attach instances (3) in this example
-
+VPCID=$(aws ec2 describe-vpcs --query 'Vpcs[0].VpcId')
 aws elbv2 create-target-group  \
     --name $6 \
     --protocol HTTP \
@@ -86,3 +94,4 @@ aws elbv2 create-listener \
 # Need to create 3 10 GB EC2 EBS Volumes and attach one to each of your EC2 instances
 # use xvdf as the device name for each volume
 
+'
