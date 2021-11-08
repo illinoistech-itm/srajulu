@@ -39,21 +39,26 @@ done
 
 
 #Delete ELB
+echo "Deleting ELB"
 aws elbv2 delete-load-balancer \
     --load-balancer-arn $ELBARN
 
 #Deregistering targets from target groups
+echo "Deregistering targets from target groups"
 for ID in ${IDSARRAY[@]};
 do
 aws elbv2 deregister-targets --target-group-arn $TGARN --targets Id=$ID
 aws elbv2 wait target-deregistered --target-group-arn $TGARN --targets Id=$ID
 done
 
-#Delete target groupss
+#Delete target groups
+echo "Delete target groups"
 aws elbv2 delete-target-group \
     --target-group-arn $TGARN
 
 #Terminating instances with tag value mp1
+echo "Terminating instances"
 aws ec2 terminate-instances \
     --instance-ids $IDSARRAY
 
+echo "Environment taken down"

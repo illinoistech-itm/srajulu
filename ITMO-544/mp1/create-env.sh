@@ -134,8 +134,10 @@ aws rds create-db-instance-read-replica \
     --source-db-instance-identifier $8
 echo "Read replica created"
 
+echo "Waiting for db-instance to become available"
+
 #RDS waiter
-aws rds wait db-instance-available 
+aws rds wait db-instance-available \
     --db-instance-identifier db-sgr-replica
 
 echo "MP1 Environment created"
