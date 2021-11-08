@@ -40,8 +40,7 @@ IDSARRAY=($(aws ec2 describe-instances --query 'Reservations[*].Instances[?State
 
 # AWS EC2 Waiters
 aws ec2 wait instance-running \
-    --instance-ids $IDSARRAY
-#    --instance-ids ${IDSARRAY[@]}
+    --instance-ids ${IDSARRAY[@]}
 
 echo "Intances are up and running"
 echo ${IDSARRAY[@]}
