@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export AWS_PAGER="" 
+#https://stackoverflow.com/questions/60122188/how-to-turn-off-the-pager-for-aws-cli-return-value
+
 # Make extensive use of: https://awscli.amazonaws.com/v2/documentation/api/latest/reference/index.html
 # Adding URLs of the syntax above each command
 
@@ -7,7 +10,6 @@
 
 echo "CREATING MP1 ENVIRONMENT"
 SGID=$(aws ec2 describe-security-groups --query 'SecurityGroups[0].GroupId')
-#SUBNETIDS=$(aws ec2 describe-subnets --query "Subnets[0:2:1].SubnetId")
 echo $SGID
 
 SUBNETID1=$(aws ec2 describe-subnets --query "Subnets[0].SubnetId")
@@ -18,6 +20,9 @@ echo $SUBNETID1
 #Using arrays for subnetids
 #SUBNETARRAY=($(aws ec2 describe-subnets --query "Subnets[*].SubnetId" --output text))
 #echo ${SUBNETARRAY[0]}
+#SUBNETIDS=$(aws ec2 describe-subnets --query "Subnets[0:2:1].SubnetId")
+
+#Launching EC2 instances with tags 
 
 echo "Launching EC2 Instances"
 
@@ -34,19 +39,18 @@ aws ec2 run-instances \
 
 echo "Instances created successfully:" 
 
-#IDSARRAY=($( aws ec2 describe-instances --query 'Reservations[].Instances[*].InstanceId' --output text))
-IDSARRAY=($(aws ec2 describe-instances --query 'Reservations[*].Instances[?State.Name==`pending` && Tags[?Value==`mp1`]].InstanceId'))
-#echo ${IDSARRAY[@]}
-
+#Fetching only instances related to mp1, optimised for ec2 waiter
+IDSWAITARRAY=($(aws ec2 describe-instances --query 'Reservations[*].Instances[?State.Name==`pending` && Tags[?Value==`mp1`]].InstanceId'))
 
 # AWS EC2 Waiters
 aws ec2 wait instance-running \
-    --instance-ids ${IDSARRAY[@]}
+    --instance-ids ${IDSWAITARRAY[@]}
+
+IDSARRAY=($(aws ec2 describe-instances --query 'Reservations[*].Instances[Tags[?Value==`mp1`]].InstanceId'))
 
 echo "Intances are up and running"
 echo ${IDSARRAY[@]}
 echo "--------------------------------------------------------------------"
-
 
 # Need Code to create Target Groups and then dynamically attach instances (3) in this example
 echo "Creating Target groups"
@@ -79,8 +83,10 @@ echo "--------------------------------------------------------------------"
 echo "Creating ELB"
 aws elbv2 create-load-balancer \
     --name $7 \
-    --subnets $SUBNETID1 $SUBNETID2
+    --subnets $SUBNETID1 $SUBNETID2 \
+    --security-group $SGID
 
+#ELB waiter; wait till ELB is available
 aws elbv2 wait load-balancer-available \
     --names $7
 
@@ -90,7 +96,7 @@ echo "--------------------------------------------------------------------"
 # Need to create ELB listener (where you attach the target-group ARN)
 
 #Fetchnig ELB ARN
-ELBARN=$(aws elbv2 describe-load-balancers --query 'LoadBalancers[0].LoadBalancerArn')
+ELBARN=$(aws elbv2 describe-load-balancers --name $7 --query 'LoadBalancers[0].LoadBalancerArn')
 
 aws elbv2 create-listener \
     --load-balancer-arn  $ELBARN \
@@ -124,3 +130,15 @@ aws rds wait db-instance-available \
     --db-instance-identifier $8
 
 echo "RDS Instance created."
+
+echo "Creating read replicas"
+aws rds create-db-instance-read-replica \
+    --db-instance-identifier db-sgr-replica \
+    --source-db-instance-identifier $8
+echo "Read replica created"
+
+#RDS waiter
+aws rds wait db-instance-available 
+    --db-instance-identifier db-sgr-replica
+
+echo "MP1 Environment created"
