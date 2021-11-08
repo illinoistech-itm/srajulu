@@ -37,8 +37,6 @@ aws ec2 run-instances \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=mini-project,Value=mp1}]'
 
 
-echo "Instances created successfully:" 
-
 #Fetching only instances related to mp1, optimised for ec2 waiter
 IDSWAITARRAY=($(aws ec2 describe-instances --query 'Reservations[*].Instances[?State.Name==`pending` && Tags[?Value==`mp1`]].InstanceId'))
 
@@ -117,7 +115,6 @@ echo "ELB URL:" $ELBDNSNAME
 echo "Creating RDS instance"
 
 aws rds create-db-instance \
-#    --db-name rds-sgr-mp1-db \
     --db-instance-identifier $8 \
     --db-instance-class $9 \
     --engine ${10} \

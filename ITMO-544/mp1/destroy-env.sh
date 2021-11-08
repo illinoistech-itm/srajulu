@@ -20,8 +20,9 @@ TGARN=$(aws elbv2 describe-target-groups \
     --query 'TargetGroups[0].TargetGroupArn')
 
 #DB-ids
-DBID=$(aws rds describe-db-instances \
+DBIDSARRAY=$(aws rds describe-db-instances \
     --query 'DBInstances[?DBInstanceStatus==`available`].DBInstanceIdentifier')
+#DBIDSARRAY=$DBID
 
 #ELB ARN
 ELBARN=$(aws elbv2 describe-load-balancers \
@@ -35,12 +36,7 @@ do
     aws rds wait db-instance-deleted --db-instance-identifier $DBID
 done
 
-#Terminating instances with tag value mp1
-aws ec2 terminate-instances \
-    --instance-ids $IDSARRAY
 
-aws ec2 instance-terminated \
-    --instance-ids $IDSARRAY
 
 #Delete ELB
 aws elbv2 delete-load-balancer \
@@ -56,4 +52,8 @@ done
 #Delete target groupss
 aws elbv2 delete-target-group \
     --target-group-arn $TGARN
+
+#Terminating instances with tag value mp1
+aws ec2 terminate-instances \
+    --instance-ids $IDSARRAY
 
