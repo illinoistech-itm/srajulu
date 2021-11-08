@@ -35,6 +35,13 @@ do
     aws rds wait db-instance-deleted --db-instance-identifier $DBID
 done
 
+#Terminating instances with tag value mp1
+aws ec2 terminate-instances \
+    --instance-ids $IDSARRAY
+
+aws ec2 instance-terminated \
+    --instance-ids $IDSARRAY
+
 #Delete ELB
 aws elbv2 delete-load-balancer \
     --load-balancer-arn $ELBARN
@@ -50,9 +57,3 @@ done
 aws elbv2 delete-target-group \
     --target-group-arn $TGARN
 
-#Terminating instances with tag value mp1
-aws ec2 terminate-instances \
-    --instance-ids $IDSARRAY
-
-aws ec2 instance-terminated \
-    --instance-ids $IDSARRAY
