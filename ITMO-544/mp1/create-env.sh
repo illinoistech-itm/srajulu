@@ -13,10 +13,10 @@ echo $SGID
 SUBNETID1=$(aws ec2 describe-subnets --query "Subnets[0].SubnetId")
 SUBNETID2=$(aws ec2 describe-subnets --query "Subnets[1].SubnetId")
 echo $SUBNETID1
-echo $SUBNETID2
+#echo $SUBNETID2
 
 #Using arrays for subnetids
-SUBNETARRAY=($(aws ec2 describe-subnets --query "Subnets[*].SubnetId" --output text))
+#SUBNETARRAY=($(aws ec2 describe-subnets --query "Subnets[*].SubnetId" --output text))
 #echo ${SUBNETARRAY[0]}
 
 echo "Launching EC2 Instances"
@@ -34,7 +34,7 @@ aws ec2 run-instances \
 echo "Instances created successfully:" 
 
 #IDSARRAY=($( aws ec2 describe-instances --query 'Reservations[].Instances[*].InstanceId' --output text))
-IDSARRAY=($(aws ec2 describe-instances --query 'Reservations[*].Instances[?State.Name==`pending` && Tags[?Value==`mp1`]].InstanceId' --output text))
+IDSARRAY=($(aws ec2 describe-instances --query 'Reservations[*].Instances[?State.Name==`pending` && Tags[?Value==`mp1`]].InstanceId'))
 #echo ${IDSARRAY[@]}
 
 
@@ -49,7 +49,7 @@ echo "--------------------------------------------------------------------"
 
 
 # Need Code to create Target Groups and then dynamically attach instances (3) in this example
-echo"Creating Target groups"
+echo "Creating Target groups"
 VPCID=$(aws ec2 describe-vpcs --query 'Vpcs[0].VpcId')
 aws elbv2 create-target-group  \
     --name $6 \
@@ -102,7 +102,7 @@ ELBDNSNAME=$(aws elbv2 describe-load-balancers --query 'LoadBalancers[0].DNSName
 
 echo "ELB URL:" $ELBDNSNAME
 
-links $ELBDNSNAME
+#links $ELBDNSNAME
 
 # Need WAIT for the operation to complete
 
