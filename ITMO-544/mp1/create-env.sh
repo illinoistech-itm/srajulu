@@ -109,8 +109,9 @@ echo "ELB URL:" $ELBDNSNAME
 
 # Need code to create an RDS instance with a read-replica
 echo "Creating RDS instance"
+
 aws rds create-db-instance \
-    --db-name rds-sgr-mp1-db \
+#    --db-name rds-sgr-mp1-db \
     --db-instance-identifier $8 \
     --db-instance-class $9 \
     --engine ${10} \

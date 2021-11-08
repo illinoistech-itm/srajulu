@@ -8,6 +8,6 @@ elb-sgr-mp1
 db-sgr-mp1-instance
 db.t2.micro
 mariadb
-sgr_dbname
-sgr_dbpass@123
+sgradmin
+sgradmin123
 20
