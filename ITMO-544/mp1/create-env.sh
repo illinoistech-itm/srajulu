@@ -21,7 +21,7 @@ SUBNETARRAY=($(aws ec2 describe-subnets --query "Subnets[*].SubnetId" --output t
 
 echo "Launching EC2 Instances"
 
-IDS=$(aws ec2 run-instances \
+aws ec2 run-instances \
     --image-id $1 \
     --instance-type $2 \
     --count $3 \
@@ -29,20 +29,22 @@ IDS=$(aws ec2 run-instances \
     --key-name $4 \
     --security-group-ids $SGID \
     --user-data $5 \
-    --tag-specifications 'ResourceType=instance,Tags=[{Key=mini-project,Value=mp1}]')
+    --tag-specifications 'ResourceType=instance,Tags=[{Key=mini-project,Value=mp1}]'
 
 echo "Instances created successfully:" 
 
 #IDSARRAY=($( aws ec2 describe-instances --query 'Reservations[].Instances[*].InstanceId' --output text))
+IDSARRAY=($(aws ec2 describe-instances --query 'Reservations[*].Instances[?State.Name==`pending` && Tags[?Value==`mp1`]].InstanceId' --output text))
 #echo ${IDSARRAY[@]}
 
 
 # AWS EC2 Waiters
 aws ec2 wait instance-running \
-    --instance-ids $IDS
+    --instance-ids $IDSARRAY
 #    --instance-ids ${IDSARRAY[@]}
 
 echo "Intances are up and running"
+echo ${IDSARRAY[@]}
 echo "--------------------------------------------------------------------"
 
 
@@ -95,6 +97,12 @@ aws elbv2 create-listener \
     --protocol HTTP \
     --port 80 \
     --default-actions Type=forward,TargetGroupArn=$TGARN
+
+ELBDNSNAME=$(aws elbv2 describe-load-balancers --query 'LoadBalancers[0].DNSName')
+
+echo "ELB URL:" $ELBDNSNAME
+
+links $ELBDNSNAME
 
 # Need WAIT for the operation to complete
 
