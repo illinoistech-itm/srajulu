@@ -46,7 +46,7 @@ IDSWAITARRAY=($(aws ec2 describe-instances --query 'Reservations[*].Instances[?S
 aws ec2 wait instance-running \
     --instance-ids ${IDSWAITARRAY[@]}
 
-IDSARRAY=($(aws ec2 describe-instances --query 'Reservations[*].Instances[?Tags[?Value==`mp1`]].InstanceId'))
+IDSARRAY=($(aws ec2 describe-instances --query 'Reservations[*].Instances[?State.Name==`running` && Tags[?Value==`mp1`]].InstanceId'))
 
 echo "Intances are up and running"
 echo ${IDSARRAY[@]}
