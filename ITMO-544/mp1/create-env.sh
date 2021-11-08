@@ -5,7 +5,7 @@
 
 # Fetching required values
 
-echo"CREATING MP1 ENVIRONMENT"
+echo "CREATING MP1 ENVIRONMENT"
 SGID=$(aws ec2 describe-security-groups --query 'SecurityGroups[0].GroupId')
 #SUBNETIDS=$(aws ec2 describe-subnets --query "Subnets[0:2:1].SubnetId")
 echo $SGID
@@ -19,7 +19,7 @@ echo $SUBNETID2
 SUBNETARRAY=($(aws ec2 describe-subnets --query "Subnets[*].SubnetId" --output text))
 #echo ${SUBNETARRAY[0]}
 
-echo"Launching EC2 Instances"
+echo "Launching EC2 Instances"
 
 IDS=$(aws ec2 run-instances \
     --image-id $1 \
@@ -33,9 +33,8 @@ IDS=$(aws ec2 run-instances \
 
 echo "Instances created successfully:" 
 
-IDSARRAY=($( aws ec2 describe-instances --query 'Reservations[].Instances[*].InstanceId' --output text))
-
-echo ${IDSARRAY[@]}
+#IDSARRAY=($( aws ec2 describe-instances --query 'Reservations[].Instances[*].InstanceId' --output text))
+#echo ${IDSARRAY[@]}
 
 
 # AWS EC2 Waiters
@@ -44,7 +43,7 @@ aws ec2 wait instance-running \
 #    --instance-ids ${IDSARRAY[@]}
 
 echo "Intances are up and running"
-echo"--------------------------------------------------------------------"
+echo "--------------------------------------------------------------------"
 
 
 # Need Code to create Target Groups and then dynamically attach instances (3) in this example
@@ -59,10 +58,10 @@ aws elbv2 create-target-group  \
     --health-check-port 80 \
     --target-type instance 
 
-echo"--------------------------------------------------------------------"
+echo "--------------------------------------------------------------------"
 
 # Need Code to register Targets to Target Group (your instance IDs)
-echo"Registering Target group"
+echo "Registering Target group"
 TGARN=$(aws elbv2 describe-target-groups --query 'TargetGroups[0].TargetGroupArn')
 
 for ID in ${IDSARRAY[@]};
@@ -72,10 +71,10 @@ aws elbv2 register-targets \
     --targets Id=$ID
 done
 
-echo"--------------------------------------------------------------------"
+echo "--------------------------------------------------------------------"
 
 # Need code to create an ELB 
-echo"Creating ELB"
+echo "Creating ELB"
 aws elbv2 create-load-balancer \
     --name $7 \
     --subnets $SUBNETID1 $SUBNETID2
@@ -83,8 +82,8 @@ aws elbv2 create-load-balancer \
 aws elbv2 wait load-balancer-available \
     --names $7
 
-echo"ELB Created"
-echo"--------------------------------------------------------------------"
+echo "ELB Created"
+echo "--------------------------------------------------------------------"
 
 # Need to create ELB listener (where you attach the target-group ARN)
 
@@ -105,5 +104,3 @@ aws elbv2 create-listener \
 
 # Need to create 3 10 GB EC2 EBS Volumes and attach one to each of your EC2 instances
 # use xvdf as the device name for each volume
-
-'
