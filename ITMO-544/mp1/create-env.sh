@@ -31,6 +31,7 @@ aws ec2 run-instances \
     --user-data $5 \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=mini-project,Value=mp1}]'
 
+
 echo "Instances created successfully:" 
 
 #IDSARRAY=($( aws ec2 describe-instances --query 'Reservations[].Instances[*].InstanceId' --output text))
@@ -107,7 +108,17 @@ echo "ELB URL:" $ELBDNSNAME
 
 
 # Need code to create an RDS instance with a read-replica
+echo "Creating RDS instance"
+aws rds create-db-instance \
+    --db-instance-identifier $8 \
+    --db-instance-class $9 \
+    --engine ${10} \
+    --master-username ${11} \
+    --master-user-password ${12} \
+    --allocated-storage ${13}
 
+#RDS waiter
+aws rds wait db-instance-available \
+    --db-instance-identifier $8
 
-# Need to create 3 10 GB EC2 EBS Volumes and attach one to each of your EC2 instances
-# use xvdf as the device name for each volume
+echo "RDS Instance created."
