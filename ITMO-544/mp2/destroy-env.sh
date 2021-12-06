@@ -7,7 +7,7 @@ export AWS_PAGER=""
 
 #Deleting S3 bucket
 S3BUCKET=$(aws s3api list-buckets --query "Buckets[-1].Name")
-aws s3 rb s3://$S3BUCKET
+aws s3 rb s3://$S3BUCKET --force  
 echo "Deleted S3 bucket: "$S3BUCKET
 
 #Deleting DynamoDB table
