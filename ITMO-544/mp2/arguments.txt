@@ -5,7 +5,7 @@ linux-itmo-vbox-script
 file://install-app.sh
 tg-sgr-mp2
 elb-sgr-mp2
-2021-mp2
+miniProject
 sns-notification-sgr-mp2
 dynamo-db-sgr-mp2
 mp2-s3-bucket-sgr
