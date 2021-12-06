@@ -54,7 +54,7 @@ aws ec2 run-instances \
     --key-name $4 \
     --security-group-ids $SGID \
     --user-data $5 \
-    --iam-instance-profile-name Name=$8 \
+    --iam-instance-profile Name=$8 \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=mini-project,Value=mp2}]'
 
 
