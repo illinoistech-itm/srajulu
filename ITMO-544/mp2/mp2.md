@@ -22,20 +22,26 @@ There is a bit of manual preparation needed to be done here. Manually launch a s
   * Hit enter to accept the default (blank) values for the passphrase questions.  
 * Execute the command: `cat /home/ubuntu/.ssh/id_rsa_github_deploy_key.pub`
   * Copy the value printed on the screen and add this as a Deploy Key in your private GitHub repo
-* Execute the command: `sudo vim /home/root/.ssh/config`
+* Execute the command: `sudo sh` to gain a root shell -- you will see a **#**
+  * While in the root shell, execute the command: `vim /root/.ssh/config`
   * Paste the content of the file named: `config` located in the jhajek sample code directory in the main mp2 folder
-* Issue the command: `sudo poweroff` to turn off (but not terminate the instance)
+  * Exit the root shell once these steps are complete
+* ~~Issue the command: `sudo poweroff` to turn off (but not terminate the instance)~~
 * Assuming you have no other instances running, issue this command to retrieve instance-id:
-  * `ID=$(aws ec2 describe-instances --query 'Reservations[*].Instances[?State.Name==`running`].InstanceId')`
+  * 
+  ~~~bash
+  ID=$(aws ec2 describe-instances --query 'Reservations[*].Instances[?State.Name==`running`].InstanceId')
+  ~~~
+
 * Once the instance ID is retrieved, issue this command to create a custom AMI from the instance we just configured.
-  * `CUSTOM-AMI=$(aws ec2 create-image --instance-id $ID --name "JRH MP2 EC2 image")`
-  * Issue the command: `echo $CUSTOM-AMI` and note this AMI down.
-  * $CUSTOM-AMI will store the new AMI identifier generated -- you can see this under the AMI menu item in the EC2 section of the AWS Console
+  * `CUSTOMAMI=$(aws ec2 create-image --instance-id $ID --name "JRH MP2 EC2 image")`
+  * Issue the command: `echo $CUSTOMAMI` and note this AMI down.
+  * $CUSTOMAMI will store the new AMI identifier generated -- you can see this under the AMI menu item in the EC2 section of the AWS Console
   * The `--name` field is a comment so you can change that value
 * Issue this command to give my account ID access to your instance (this is how I will run your instance)
-  * `aws ec2 modify-image-attribute --image-id $CUSTOM-AMI --launch-permission "Add=[{UserId=548002151864}]"`
-* Update your `arguments.txt` file to use the value provided in $CUSTOM-AMI in place of the default AMI had been using
-* Open port 3000 in your security group
+  * `aws ec2 modify-image-attribute --image-id $CUSTOMAMI --launch-permission "Add=[{UserId=548002151864}]"`
+* Update your `arguments.txt` file to use the value provided in $CUSTOMAMI in place of the default AMI had been using
+* Open port ~~3000~~ 3300 in your security group
 
 ## MP2 components
 
@@ -85,17 +91,24 @@ This is where you will pass the arguments (space delimited) as follows (order is
 
 Place the required screenshots in this document:
 
+Environment created
+![create-env.sh](./media/environment-created.png "Sucessful environment creation")
+
 ### app.js
 
 Take a screenshot of the app.js rendering in the browser
+![App.js](./media/app-rendered.png "Running app")
+![App.js](./media/form-submitted.png "Running app")
 
 ### S3 bucket
 
 Take a screenshot of the S3 Raw bucket containing the image that was uploaded
+![S3](./media/s3-bucket.png "Files uploaded to S3 bucket")
 
 ### SNS message
 
 Take a screenshot of the text message your received saying that the image was uploaded
+![SNS](./media/sns-notification.png "Notification received")
 
 Push your mp2.md, create-env.sh, destroy-env.sh, and install-app.sh to a folder named **mp2** created in your itmo-444/itmo-544 directory in your private GitHub repo.
 
