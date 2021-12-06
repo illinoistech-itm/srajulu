@@ -8,3 +8,4 @@ output*/
 .vmdk
 .ovf
 .vagrant/*
+variables.pkr.hcl

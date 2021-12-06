@@ -1,0 +1,11 @@
+ami-07b07b223ef29ab47
+t2.micro
+3
+linux-itmo-vbox-script
+file://install-app.sh
+tg-sgr-mp2
+elb-sgr-mp2
+iam-instance-profile-sgr-mp2
+sns-notification-sgr-mp2
+dynamo-db-sgr-mp2
+mp2-s3-bucket-sgr
