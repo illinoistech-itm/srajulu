@@ -182,7 +182,7 @@ Push this to your GitHub private account repo.
 
 Here is my own completed sample: [https://github.com/illinoistech-itm/jhajek/blob/master/itmt-430/Readme.md](https://github.com/illinoistech-itm/jhajek/blob/master/itmt-430/Readme.md "Professor's GitHub Repo Sample").  **Note**, I will have more folders then you because I have sample code for more classes.  If you have previously completed this assignment, no need to do anything unless you want to update the information.
 
-**Here is my readme file:** [] 
+**Here is my readme file:** [https://github.com/illinoistech-itm/srajulu/blob/main/README.md] 
 
 ### Create a .gitignore file
 
