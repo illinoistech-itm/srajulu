@@ -35,6 +35,7 @@ Execute command: `R -v`
 ## Python Version
 
 Execute command: `python -V`
+
 ![Python](./images/python.png "Python version")
 
 ## Result of Cloning Your Private Repository
