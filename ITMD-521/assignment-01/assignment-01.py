@@ -1,4 +1,4 @@
-from __future__ import_function
+from __future__ import function
 from optparse import Option
 from os import truncate
 import sys
