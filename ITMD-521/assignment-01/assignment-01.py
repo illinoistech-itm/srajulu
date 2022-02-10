@@ -1,10 +1,10 @@
-from __future__ import function
-from optparse import Option
-from os import truncate
+#from __future__ import function
+#from optparse import Option
+#from os import truncate
 import sys
 
 from pyspark.sql import SparkSession
-from pyspark.sql.function import count
+#from pyspark.sql.function import count
 from pyspark.sql.types import *
 
 if __name__ == "__main__":
