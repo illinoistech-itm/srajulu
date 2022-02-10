@@ -1,6 +1,7 @@
 #from __future__ import function
 #from optparse import Option
 #from os import truncate
+from os import truncate
 import sys
 
 from pyspark.sql import SparkSession
@@ -19,3 +20,5 @@ if __name__ == "__main__":
     infer_divvy_df.show(n=10, truncate=False)
     infer_divvy_df.printSchema()
     parquet_path = infer_divvy_df.write.format("parquet").save("/home/vagrant/srajulu/ITMD-521/assignment-01/example-data/divvy-2015-q1")
+    parquet_file = spark.read.format("parquet").load("/home/vagrant/srajulu/ITMD-521/assignment-01/example-data/divvy-2015-q1")
+    parquet_file.show(n=10, truncate=False)
