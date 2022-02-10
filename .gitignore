@@ -24,3 +24,4 @@ config.default.yml
 *.csv
 *.txt
 *.json
+example-data/
