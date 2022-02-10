@@ -26,3 +26,21 @@ if __name__ == "__main__":
     parquet_file.show(n=10, truncate=False)
 
 ## Programmatically creating and attaching a schema using StructFields
+
+    struct_schema = StructType([StructField("trip_id", IntegerType(),
+        StructField("starttime", StringType(),
+        StructField("stoptime", StringType(),
+        StructField("bikeid", IntegerType(),
+        StructField("tripduration", IntegerType(),
+        StructField("from_station_id", IntegerType(),
+        StructField("from_station_name", StringType(),
+        StructField("to_station_id", IntegerType(),
+        StructField("to_station_name", StringType(),
+        StructField("usertype", StringType(),
+        StructField("gender", StringType(),
+        StructField("birthyear", IntegerType())])
+
+    struct_divvy_df = (spark.read.schema(struct_schema).format("csv")).option("structureSchema","true").load(data_source)
+    struct_divvy_df.show()
+    struct_divvy_df.printSchema()
+    
