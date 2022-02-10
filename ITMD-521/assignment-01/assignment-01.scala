@@ -45,6 +45,7 @@ def main(args: Array[String]) {
     val select_gender_df = infer_divvy_df.select("gender", "to_station_id", "to_station_name", "Count").where(infer_divvy_df.gender == "Male").groupBy("to_station_id").sum("Count").orderBy(desc("sum(Count)"))
     select_gender_df.show(10, false)
 
+//hehehehehe
 
      }
 }
