@@ -43,6 +43,8 @@ def main(args: Array[String]) {
 
 
     val select_gender_df = (infer_divvy_df.select("gender", "to_station_id", "to_station_name").where(infer_divvy_df.gender == "Male").groupBy("to_station_id").count())
-     select_gender_df.show(10)
+    select_gender_df.show(n=10, false)
+
+
      }
 }
