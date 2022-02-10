@@ -1,4 +1,4 @@
-package main.scala.assignment1 
+package assignment1 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 
@@ -14,6 +14,6 @@ object assignment {
     val DivvyFile = args(0)
 
     val Infer_DF = spark.read.format("csv").option("header", "true").option("inferSchema", "true").load(DivvyFile)
-    Infer_DF.show()
+    Infer_DF.show(10)
     Infer_DF.printSchema()
 }
