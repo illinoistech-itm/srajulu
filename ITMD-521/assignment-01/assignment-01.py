@@ -18,4 +18,4 @@ if __name__ == "__main__":
     infer_divvy_df = (spark.read.format("csv").option("header","true").option("inferSchema","true").load(data_source))
     infer_divvy_df.show(n=10, truncate=False)
     infer_divvy_df.printSchema()
-    parquet_path = infer_divvy_df.write.format("parquet").save("/home/vagrant/srajulu/ITMD-521/assignment-01/example-data")
+    parquet_path = infer_divvy_df.write.format("parquet").save("/home/vagrant/srajulu/ITMD-521/assignment-01/example-data/divvy-2015-q1")
