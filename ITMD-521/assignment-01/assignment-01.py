@@ -21,9 +21,9 @@ if __name__ == "__main__":
     infer_divvy_df = (spark.read.format("csv").option("header","true").option("inferSchema","true").load(data_source))
     infer_divvy_df.show(n=10, truncate=False)
     infer_divvy_df.printSchema()
-    parquet_path = infer_divvy_df.write.format("parquet").save("/home/vagrant/srajulu/ITMD-521/assignment-01/example-data/divvy-2015-q1")
-    parquet_file = spark.read.format("parquet").load("/home/vagrant/srajulu/ITMD-521/assignment-01/example-data/divvy-2015-q1")
-    parquet_file.show(n=10, truncate=False)
+    parquet_path = infer_divvy_df.write.format("parquet").save("/home/vagrant/srajulu/ITMD-521/assignment-01/example-data/divy-2015")
+    #parquet_file = spark.read.format("parquet").load("/home/vagrant/srajulu/ITMD-521/assignment-01/example-data/divy-2015")
+    #parquet_file.show(n=10, truncate=False)
 
 ## Programmatically creating and attaching a schema using StructFields
 
@@ -43,3 +43,7 @@ if __name__ == "__main__":
     struct_divvy_df = (spark.read.schema(struct_schema).format("csv")).option("header","true").option("structureSchema","true").load(data_source)
     struct_divvy_df.show()
     struct_divvy_df.printSchema()
+
+## Attaching a schema via a DDL
+
+  #  ddl_divvy_df = 
