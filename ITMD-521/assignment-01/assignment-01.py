@@ -23,7 +23,7 @@ if __name__ == "__main__":
     infer_divvy_df.show(n=10, truncate=False)
     infer_divvy_df.printSchema()
     parquet_path = infer_divvy_df.write.format("parquet").save("../assignment-01/example-data/divvy-2015.parquet")
-    parquet_file = spark.read.format("parquet").load("../assignment-01/example-data/divvy-2015")
+    parquet_file = spark.read.format("parquet").load("../assignment-01/example-data/divvy-2015.parquet")
     parquet_file.show(n=10, truncate=False)
 
 ## Programmatically creating and attaching a schema using StructFields
