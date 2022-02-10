@@ -1,6 +1,3 @@
-#from __future__ import function
-#from optparse import Option
-#from os import truncate
 from os import truncate
 from statistics import mode
 import sys
