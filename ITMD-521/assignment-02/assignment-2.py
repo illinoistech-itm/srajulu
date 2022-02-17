@@ -36,6 +36,6 @@ struct_schema = StructType([StructField('CallNumber', IntegerType(), True),
                     StructField('Delay', FloatType(), True)])
 
 # Reading from CSV file
-if _name_ == "_main_":
+if __name__ == "_main_":
     data_source = spark.read.format("csv").option("header","True").schema(struct_schema).load("/home/vagrant/srajulu/ITMD-521/assignment-02/sf-fire-calls.csv")
     data_source.show(30)
