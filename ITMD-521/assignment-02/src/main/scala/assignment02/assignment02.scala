@@ -17,7 +17,7 @@ object assignment02 {
         import spark.sql
 
       val data_source = spark.read.json("/home/vagrant/iot_devices.json").as[Deviceiotdata]
-      ds.show(10, false)
+      data_source.show(10, false)
 
     //Q1 - Detect failing devices with battery levels below a threshold.
     val DStemp = data_source.select("*").where("battery_level < 5").as[Deviceiotdata]
