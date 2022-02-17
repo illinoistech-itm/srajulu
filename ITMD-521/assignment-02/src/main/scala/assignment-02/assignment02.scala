@@ -1,4 +1,4 @@
-package main.scala.assignment-02
+package main.scala.assignment02
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
