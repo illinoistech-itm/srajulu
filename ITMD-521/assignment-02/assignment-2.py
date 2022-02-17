@@ -64,3 +64,6 @@ diff_fire_calls_df.select("Neighborhood", "ResponseDelayedinMins","IncidentDate"
 
 # Q5 - Which week in the year in 2018 had the most fire calls?
 diff_fire_calls_df.filter(year('IncidentDate') == 2018).groupBy(weekofyear('IncidentDate')).count().orderBy('count', ascending=False).show()
+
+# Q6 - Is there a correlation between neighborhood, zip code, and number of fire calls?
+diff_fire_calls_df.select("Neighborhood", "Zipcode").groupBy(col("Neighborhood"),col("Zipcode")).count().orderBy('count').show()
