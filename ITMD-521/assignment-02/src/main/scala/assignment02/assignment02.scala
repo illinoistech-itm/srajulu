@@ -27,5 +27,11 @@ object assignment02 {
     val DStemp1 = data_source.select("c02_level","cn").distinct().orderBy(desc("c02_level"))
     //groupBy("c02_level","cca3").orderBy(desc("(c02_level)"))
     DStemp1.show(10, false)
+
+    //Q3 - Compute the min and max values for temperature, battery level, CO2, and humidity.
+    val temperature = data_source.columns(13)
+    val min_max = data_source.agg(min(temperature), max(temperature))
+    min_max.show()
+
   }
 }
