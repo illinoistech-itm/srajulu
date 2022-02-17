@@ -30,8 +30,21 @@ object assignment02 {
 
     //Q3 - Compute the min and max values for temperature, battery level, CO2, and humidity.
     val temperature = data_source.columns(13)
-    val min_max = data_source.agg(min(temperature), max(temperature))
-    min_max.show()
+    val min_max_temp = data_source.agg(min(temperature), max(temperature))
+    min_max_temp.show()
+    val battery_level = data_source.columns(0)
+    val min_max_battery = data_source.agg(min(battery_L), max(battery_L))
+    min_max_battery.show()
+
+    val co2 = data_source.columns(1)
+    val min_max_co2 = data_source.agg(min(co2), max(co2))
+    min_max_co2.show()
+
+    val humidity = data_source.columns(7)
+    val min_max_humidity = data_source.agg(min(humidity), max(humidity))
+    min_max_humidity.show()
+
+
 
   }
 }
