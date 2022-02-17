@@ -56,5 +56,8 @@ diff_fire_calls_df = (rename_fire_df.withColumn("IncidentDate", to_timestamp(col
 # Q2 - What months within the year 2018 saw the highest number of fire calls?
 diff_fire_calls_df.filter(year('IncidentDate') == 2018).groupBy(month('IncidentDate')).count().orderBy('count', ascending=False).show()
 
-# Q3 - Which week in the year in 2018 had the most fire calls?
+# Q3 - Which neighborhood in San Francisco generated the most fire calls in 2018? 
+diff_fire_calls_df.select("Neighborhood","IncidentDate","City").filter(col("City") == 'San Francisco').filter(year("IncidentDate") == 2018).groupBy(col("Neighborhood"),col("City")).count().orderBy('count', ascending=False).show()
+
+# Q5 - Which week in the year in 2018 had the most fire calls?
 diff_fire_calls_df.filter(year('IncidentDate') == 2018).groupBy(weekofyear('IncidentDate')).count().orderBy('count', ascending=False).show()
