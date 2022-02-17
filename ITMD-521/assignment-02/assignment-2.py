@@ -60,7 +60,7 @@ diff_fire_calls_df.filter(year('IncidentDate') == 2018).groupBy(month('IncidentD
 diff_fire_calls_df.select("Neighborhood","IncidentDate","City").filter(col("City") == 'San Francisco').filter(year("IncidentDate") == 2018).groupBy(col("Neighborhood"),col("City")).count().orderBy('count', ascending=False).show()
 
 # Q4 - Which neighborhoods had the worst response times to fire calls in 2018? (To check the issue)
-diff_fire_calls_df.select("Neighborhood", "ResponseDelayedinMins","IncidentDate").filter(year("IncidentDate"))
+diff_fire_calls_df.select("Neighborhood", "ResponseDelayedinMins","IncidentDate").filter(year("IncidentDate") == 2018).show()
 
 # Q5 - Which week in the year in 2018 had the most fire calls?
 diff_fire_calls_df.filter(year('IncidentDate') == 2018).groupBy(weekofyear('IncidentDate')).count().orderBy('count', ascending=False).show()
