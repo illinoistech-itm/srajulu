@@ -1,3 +1,4 @@
+from calendar import month
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
@@ -51,3 +52,6 @@ q1_call_df = data_source.select('CallType').groupBy('CallType').count().orderBy(
 q1_call_df.show()
 rename_fire_df = data_source.withColumnRenamed("Delay", "ResponseDelayedinMins")
 diff_fire_calls_df = (rename_fire_df.withColumn("IncidentDate", to_timestamp(col("CallDate"), "MM/dd/yyyy")).drop("CallDate"))
+
+# Q2 - What months within the year 2018 saw the highest number of fire calls?
+diff_fire_calls_df.filter(year('IncidentDate') == 2018).groupBy(month('IncidentDate')).count().orderBy('count', ascending=False).show()
