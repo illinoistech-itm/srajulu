@@ -39,3 +39,7 @@ struct_schema = StructType([StructField('CallNumber', IntegerType(), True),
 if __name__ == "__main__":
     data_source = spark.read.format("csv").option("header","True").schema(struct_schema).load("/home/vagrant/srajulu/ITMD-521/assignment-02/sf-fire-calls.csv")
     data_source.show(30)
+
+# Q1 - What were all the different types of fire calls in 2018?
+q1_call_df = data_source.select('CallType').groupBy('CallType').count().orderBy("count", ascending=False)
+q1_call_df.show()
