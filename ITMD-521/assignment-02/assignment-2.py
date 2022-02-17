@@ -1,6 +1,12 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
+from pyspark.sql.functions import year
+from pyspark.sql.functions import *
+from pyspark.sql.functions import to_timestamp
+from pyspark.sql.functions import to_date
+from pyspark.sql.functions import col
+from pyspark.sql.functions import weekofyear
 
 spark = SparkSession.builder.appName("Assignment02").getOrCreate()
 
@@ -43,3 +49,5 @@ if __name__ == "__main__":
 # Q1 - What were all the different types of fire calls in 2018?
 q1_call_df = data_source.select('CallType').groupBy('CallType').count().orderBy("count", ascending=False)
 q1_call_df.show()
+rename_fire_df = data_source.withColumnRenamed("Delay", "ResponseDelayedinMins")
+diff_fire_calls_df = (rename_fire_df.withColumn("IncidentDate", to_timestamp(col("CallDate"), "MM/dd/yyyy")).drop("CallDate"))
