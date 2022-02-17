@@ -9,7 +9,7 @@ import org.apache.spark.sql.types._
 // Schema definition
 case class Deviceiotdata(battery_level: Long, c02_level: Long, cca2: String, cca3: String, cn: String, device_id: Long, device_name: String, humidity: Long, ip: String, latitude: Double,lcd: String, longitude: Double, scale: String, temp: Long, timestamp: Long)
 
-object assignment-02 {
+object assignment02 {
   def main(args: Array[String]) {
 
       val spark=(SparkSession.builder.appName("assignment02").getOrCreate())
