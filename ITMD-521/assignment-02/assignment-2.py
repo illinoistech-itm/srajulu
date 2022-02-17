@@ -67,3 +67,7 @@ diff_fire_calls_df.filter(year('IncidentDate') == 2018).groupBy(weekofyear('Inci
 
 # Q6 - Is there a correlation between neighborhood, zip code, and number of fire calls?
 diff_fire_calls_df.select("Neighborhood", "Zipcode").groupBy(col("Neighborhood"),col("Zipcode")).count().orderBy('count').show()
+
+# Q7 - Writing to parquet format and saving to the specified location
+diff_fire_calls_df.write.format("parquet").mode("overwrite").save("/home/vagrant/srajulu/ITMD-521/assignment-02/fire-Service-Parquet/")
+
