@@ -71,3 +71,10 @@ diff_fire_calls_df.select("Neighborhood", "Zipcode").groupBy(col("Neighborhood")
 # Q7 - Writing to parquet format and saving to the specified location
 diff_fire_calls_df.write.format("parquet").mode("overwrite").save("/home/vagrant/srajulu/ITMD-521/assignment-02/fire-Service-Parquet/")
 
+# Saving parquet file as table
+diff_fire_calls_df.write.format("parquet").option("mode","overwrite").saveAsTable("FireServiceCalls")
+spark.sql("SELECT * from FireServiceCalls")
+
+# Reading from parquet files
+parquet_df = spark.read.format("parquet").load("/home/vagrant/srajulu/ITMD-521/assignment-02/fire-Service-Parquet/")
+parquet_df.show(10)
