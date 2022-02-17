@@ -22,5 +22,10 @@ object assignment02 {
     //Q1 - Detect failing devices with battery levels below a threshold.
     val DStemp = data_source.select("*").where("battery_level < 5").as[Deviceiotdata]
     DStemp.show(5, false)
+
+    //Q2 - Identify offending countries with high levels of CO2 emissions.
+    val DStemp1 = data_source.select("c02_level","cn").distinct().orderBy(desc("c02_level"))
+    //groupBy("c02_level","cca3").orderBy(desc("(c02_level)"))
+    DStemp1.show(10, false)
   }
 }
