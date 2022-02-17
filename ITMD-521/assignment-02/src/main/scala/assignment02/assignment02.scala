@@ -16,7 +16,11 @@ object assignment02 {
         import spark.implicits._
         import spark.sql
 
-      val ds = spark.read.json("/home/vagrant/iot_devices.json").as[Deviceiotdata]
+      val data_source = spark.read.json("/home/vagrant/iot_devices.json").as[Deviceiotdata]
       ds.show(10, false)
+
+    //Q1 - Detect failing devices with battery levels below a threshold.
+    val DStemp = data_source.select("*").where("battery_level < 5").as[Deviceiotdata]
+    DStemp.show(5, false)
   }
 }
