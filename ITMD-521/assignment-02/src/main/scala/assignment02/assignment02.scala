@@ -33,7 +33,7 @@ object assignment02 {
     val min_max_temp = data_source.agg(min(temperature), max(temperature))
     min_max_temp.show()
     val battery_level = data_source.columns(0)
-    val min_max_battery = data_source.agg(min(battery_L), max(battery_L))
+    val min_max_battery = data_source.agg(min(battery_level), max(battery_level))
     min_max_battery.show()
 
     val co2 = data_source.columns(1)
