@@ -57,4 +57,4 @@ diff_fire_calls_df = (rename_fire_df.withColumn("IncidentDate", to_timestamp(col
 diff_fire_calls_df.filter(year('IncidentDate') == 2018).groupBy(month('IncidentDate')).count().orderBy('count', ascending=False).show()
 
 # Q3 - Which week in the year in 2018 had the most fire calls?
-diff_fire_calls_df.filter(year('IncidentDate') == 2018).groupBy(weekofyear('IncidentDate')).count().orderBy('count', ascending=False)
+diff_fire_calls_df.filter(year('IncidentDate') == 2018).groupBy(weekofyear('IncidentDate')).count().orderBy('count', ascending=False).show()
