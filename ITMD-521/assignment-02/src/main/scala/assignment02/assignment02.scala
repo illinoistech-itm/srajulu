@@ -44,7 +44,12 @@ object assignment02 {
     val min_max_humidity = data_source.agg(min(humidity), max(humidity))
     min_max_humidity.show()
 
-
+    //4. Sort and group by average temperature, CO2, humidity, and country.
+    data_source.sort("temp","c02_level","humidity","cn")
+    data_source.groupBy("temp","c02_level","humidity","cn")
+    //.groupBy(ds => (ds.temp, ds.c02_level, ds.humidity, ds.cn))
+    val avg_val = data_source.select("temp","c02_level","humidity","cn")
+    avg_val.show()
 
   }
 }
