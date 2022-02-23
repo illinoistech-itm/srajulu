@@ -19,3 +19,9 @@ if __name__ == "__main__":
     data_source = (spark.read.format("csv").option("header","True").option("inferschema", "True").load(data_file))
     data_source.createOrReplaceTempView("us_delay_flights_tbl")
     data_source.show(5)
+
+#Part 1 
+# Q1 - Find all flights whose distance is greater than 1,000 miles
+
+    Q1 = spark.sql("SELECT distance, origin, destination FROM us_delay_flights_tbl WHERE distance > 1000 ORDER BY distance DESC")
+    Q1.show(10)
