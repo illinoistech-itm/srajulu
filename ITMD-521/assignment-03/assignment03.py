@@ -23,5 +23,6 @@ if __name__ == "__main__":
 #Part 1 
 # Q1 - Find all flights whose distance is greater than 1,000 miles
 
-    Q1 = spark.sql("SELECT distance, origin, destination FROM us_delay_flights_tbl WHERE distance > 1000 ORDER BY distance ASC")
+    Q1 = spark.sql("""SELECT distance, origin, destination FROM us_delay_flights_tbl WHERE distance > 1000 ORDER BY distance DESC""")
     Q1.show(10)
+
