@@ -47,3 +47,10 @@ if __name__ == "__main__":
                FROM us_delay_flights_tbl
                ORDER BY origin, delay DESC""")
     Q3.show(10)
+
+#Part 2
+# Converting Spark SQL queries queries in DataFrame API 
+
+# Q1
+DF_Q1 = (data_source.select("distance", "origin", "destination")where(col("distance") > 1000)orderBy(desc("distance")))
+DF_Q1.show(10)
