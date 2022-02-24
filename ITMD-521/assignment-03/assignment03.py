@@ -54,3 +54,7 @@ if __name__ == "__main__":
 # Q1
 DF_Q1 = (data_source.select("distance", "origin", "destination").where(col("distance") > 1000).orderBy(desc("distance")))
 DF_Q1.show(10)
+
+# Q2
+DF_Q2 = (data_source.select("date","delay","origin","destination")where((col("delay") > 120) & (col("origin") == 'SFO') & (col("destination") == 'ORD'))orderBy(desc("delay")))
+DF_Q2.show(10)
