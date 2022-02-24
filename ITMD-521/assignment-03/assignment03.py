@@ -70,4 +70,5 @@ sgr_db_schema="date STRING, delay INT, distance INT, origin STRING, destination 
 flights_df = spark.read.csv(data_file, schema=sgr_db_schema) 
 flights_df.write.saveAsTable("us_delay_flights_tbl")
 ORD_DF = spark.sql("SELECT date, delay, origin, destination FROM us_delay_flights_tbl  WHERE origin = 'ORD'")
-ORD_DF.show(5)
+#ORD_DF.show(5)
+ORD_DF.createOrReplaceTempView("view_ord_us_delay_flights_tbl").show(10)
