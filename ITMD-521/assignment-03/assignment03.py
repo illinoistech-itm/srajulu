@@ -26,5 +26,8 @@ if __name__ == "__main__":
     Q1 = spark.sql("""SELECT distance, origin, destination FROM us_delay_flights_tbl WHERE distance > 1000 ORDER BY distance DESC""")
     Q1.show(10)
 
-    Q2 = spark.sql("""SELECT origin, destination FROM us_delay_flights_tbl WHERE delay > 120 AND, ORIGIN = 'SFO' DESTINATION = 'ORD' ORDER by delay DESC""")
+# Q2 - Display all of the longest flights were between Honolulu (HNL) and New York (JFK). 
+# Next, we’ll find all flights between San Francisco (SFO) and Chicago (ORD) with at least a two-hour delay
+
+    Q2 = spark.sql("""SELECT date, delay, origin, destination FROM us_delay_flights_tbl WHERE delay > 120 AND ORIGIN = 'SFO' AND DESTINATION = 'ORD' ORDER by delay DESC""")
     Q2.show(10)
