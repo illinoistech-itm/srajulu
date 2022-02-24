@@ -58,3 +58,14 @@ DF_Q1.show(10)
 # Q2
 DF_Q2 = (data_source.select("date","delay","origin","destination").where((col("delay") > 120) & (col("origin") == 'SFO') & (col("destination") == 'ORD')).orderBy(desc("delay")))
 DF_Q2.show(10)
+
+# Q3
+DF_Q3 = (data_source.select("delay","origin","destination",expr("CASE WHEN delay > 360 THEN 'Very Long Delays' WHEN delay > 120 AND delay < 360 THEN 'Long Delays' WHEN delay > 60 AND delay < 120 THEN 'Short Delays' WHEN delay > 0 and delay < 60  THEN 'Tolerable Delays' WHEN delay = 0 THEN 'No Delays' ELSE 'Early' END AS Flight_Delays"))).orderBy(("origin"),(desc("delay")))
+DF_Q3.show(10)
+
+#Creating DB and  managed Tables
+spark.sql("CREATE DATABASE SGR_SPARK_DB")
+spark.sql("USE SGR_SPARK_DB")
+sgr_db_schema="date STRING, delay INT, distance INT, origin STRING, destination STRING" 
+flights_df = spark.read.csv(data_file, schema=sgr_db_schema) 
+flights_df.write.saveAsTable("us_delay_flights_tbl")
