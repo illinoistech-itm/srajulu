@@ -31,3 +31,19 @@ if __name__ == "__main__":
 
     Q2 = spark.sql("""SELECT date, delay, origin, destination FROM us_delay_flights_tbl WHERE delay > 120 AND ORIGIN = 'SFO' AND DESTINATION = 'ORD' ORDER by delay DESC""")
     Q2.show(10)
+
+# Q3 - Query to use the CASE clause. to label all US flights, regardless of origin and destination, 
+# Very Long Delays (> 6 hours), Long Delays (2–6 hours), etc. add these human-readable labels in a new column called Flight_Delays
+
+    Q3 =spark.sql("""SELECT delay, origin, destination,
+              CASE
+                  WHEN delay > 360 THEN 'Very Long Delays'
+                  WHEN delay > 120 AND delay < 360 THEN 'Long Delays'
+                  WHEN delay > 60 AND delay < 120 THEN 'Short Delays'
+                  WHEN delay > 0 and delay < 60  THEN  'Tolerable Delays'
+                  WHEN delay = 0 THEN 'No Delays'
+                  ELSE 'Early'
+               END AS Flight_Delays
+               FROM us_delay_flights_tbl
+               ORDER BY origin, delay DESC""")
+    Q3.show(10)
