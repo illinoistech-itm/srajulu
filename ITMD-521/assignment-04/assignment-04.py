@@ -17,6 +17,15 @@ JDBC_DF = spark.read.format("jdbc").option("url","jdbc:mysql://localhost/employe
 Q1_DF=spark.sql("Select count(*) from Employees")
 Q1_DF.show()
 
-# Display the schema of the Employees Table from the DF
-# Q2 - Print Schema
+# Q2 - Display the schema of the Employees Table from the DF
 JDBC_DF.printSchema()
+
+# Q3 - Create a DataFrame of the top 10,000 employee salaries (sort DESC) from the salaries table
+Q3 = spark.read.format("jdbc")\
+.option("url","jdbc:mysql://localhost/employees")\
+.option("driver","com.mysql.jdbc.Driver")\
+.option("dbtable","salaries")\
+.option("user","worker")\
+.option("password","cluster").load().createOrReplaceTempView("Salaries")
+spark.read.table("Salaries").show(5)
+Salary_DF = spark.sql("SELECT * from Salaries order by salary DESC limit 10000")
