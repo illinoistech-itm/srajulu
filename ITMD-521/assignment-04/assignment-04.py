@@ -21,7 +21,7 @@ Q1_DF.show()
 JDBC_DF.printSchema()
 
 # Q3 - Create a DataFrame of the top 10,000 employee salaries (sort DESC) from the salaries table
-Q3 = spark.read.format("jdbc")\
+Q3_DF = spark.read.format("jdbc")\
 .option("url","jdbc:mysql://localhost/employees")\
 .option("driver","com.mysql.jdbc.Driver")\
 .option("dbtable","salaries")\
@@ -42,7 +42,7 @@ Salary_DF.write.format("csv").save("salaries.parquet")
 
 #Assignment Part 2
 # Q4
-Q4_DF = spark.read.format("jdbc")\
+Q3_DF = spark.read.format("jdbc")\
 .option("url","jdbc:mysql://localhost/employees")\
 .option("driver","com.mysql.jdbc.Driver")\
 .option("query","select * from titles where title = 'Senior Engineer' ")\
