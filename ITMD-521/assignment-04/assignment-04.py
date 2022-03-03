@@ -15,3 +15,7 @@ JDBC_DF = spark.read.format("jdbc").option("url","jdbc:mysql://localhost/employe
 # Q1 - Display the count of the number of records in the DF
 Q1_DF=spark.sql("Select count(*) from Employees")
 Q1_DF.show()
+
+# Display the schema of the Employees Table from the DF
+# Q2 - Print Schema
+Q1_DF.printSchema()
