@@ -1,14 +1,14 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
-from pyspark.sql import findspark
+
 
 spark = SparkSession.builder.appName("Assignment04").getOrCreate()
-findspark.add_packages('mysql:mysql-connector-java:8.0.11')
+
 
 # Read Option 1: Loading data from a JDBC source using load method
 jdbcDF1 = (spark.read
 .format("jdbc")
-.option("url", "jdbs:sqlserver://localhost:;databaseName:employees")
+.option("url", "jdbs:mysql://localhost:3306;databaseName:employees")
 .option("dbtable", "employees")
 .option("user", "worker")
 .option("password", "cluster")
