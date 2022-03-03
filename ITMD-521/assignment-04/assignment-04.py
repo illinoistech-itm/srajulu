@@ -1,6 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
-import findspark
+from pyspark.sql import findspark
 
 spark = SparkSession.builder.appName("Assignment04").getOrCreate()
 findspark.add_packages('mysql:mysql-connector-java:8.0.11')
