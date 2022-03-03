@@ -18,7 +18,7 @@ Q1_DF=spark.sql("Select count(*) from Employees")
 Q1_DF.show()
 
 # Q2 - Display the schema of the Employees Table from the DF
-JDBC_DF.printSchema()
+JDBC_DF_TEMP.printSchema()
 
 # Q3 - Create a DataFrame of the top 10,000 employee salaries (sort DESC) from the salaries table
 Q3 = spark.read.format("jdbc")\
