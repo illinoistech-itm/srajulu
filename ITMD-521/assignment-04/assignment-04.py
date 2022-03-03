@@ -39,3 +39,12 @@ Salary_DF.write.format("jdbc")\
   .save()
 
 Salary_DF.write.format("csv").save("salaries.parquet")
+
+#Assignment Part 2
+# Q4
+Q4_DF = spark.read.format("jdbc")\
+.option("url","jdbc:mysql://localhost/employees")\
+.option("driver","com.mysql.jdbc.Driver")\
+.option("query","select * from titles where title = 'Senior Engineer' ")\
+.option("user","worker")\
+.option("password","cluster").load().show()
