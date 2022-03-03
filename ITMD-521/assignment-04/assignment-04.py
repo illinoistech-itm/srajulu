@@ -29,3 +29,13 @@ Q3 = spark.read.format("jdbc")\
 .option("password","cluster").load().createOrReplaceTempView("Salaries")
 spark.read.table("Salaries").show(5)
 Salary_DF = spark.sql("SELECT * from Salaries order by salary DESC limit 10000")
+
+Salary_DF.write.format("jdbc")\
+  .option("url", "jdbc:mysql://localhost/employees")\
+  .option("driver","com.mysql.jdbc.Driver")\
+  .option("dbtable", "salaries")\
+  .option("user", "worker")\
+  .option("password", "cluster")\
+  .save()
+
+Salary_DF.write.format("csv").save("salaries.parquet")
