@@ -2,8 +2,6 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 from pyspark import *
 
-spark = SparkSession.builder.appName("Assignment04").getOrCreate()
-
 spark = SparkSession\
 .builder\
 .master('local[*]')\
