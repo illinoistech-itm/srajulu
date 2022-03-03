@@ -18,4 +18,4 @@ Q1_DF.show()
 
 # Display the schema of the Employees Table from the DF
 # Q2 - Print Schema
-Q1_DF.printSchema()
+JDBC_DF.printSchema()
