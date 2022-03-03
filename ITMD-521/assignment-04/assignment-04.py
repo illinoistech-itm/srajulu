@@ -10,7 +10,7 @@ spark = SparkSession\
 .getOrCreate()
 
 JDBC_DF_TEMP = spark.read.format("jdbc").option("url","jdbc:mysql://localhost/employees").option("driver","com.mysql.jdbc.Driver").option("dbtable","employees").option("user","worker").option("password","cluster").load().createOrReplaceTempView("Employees")
-JDBC_DF = spark.read.format("jdbc").option("url","jdbc:mysql://localhost/employees").option("driver","com.mysql.jdbc.Driver").option("dbtable","employees").option("user","worker").option("password","cluster").load().show()
+JDBC_DF = spark.read.format("jdbc").option("url","jdbc:mysql://localhost/employees").option("driver","com.mysql.jdbc.Driver").option("dbtable","employees").option("user","worker").option("password","cluster").load()
 
 #Assignment Part 1
 # Q1 - Display the count of the number of records in the DF
