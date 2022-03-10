@@ -85,3 +85,7 @@ Column_1.show()
 # Columnn Dropped
 Column_Drop = Column_1.drop("delay")
 Column_Drop.show()
+
+# Column Renamed
+Column_Rename = Column_Drop.withColumnRenamed("status", "flight_status")
+Column_Rename.show()
