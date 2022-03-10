@@ -65,3 +65,8 @@ data_frame_1 = (data_frame_1
 .withColumn("distance", expr("CAST(distance as INT) as distance")))
 data_frame_1.createOrReplaceTempView("departureDelays")
 data_frame_1.show()
+
+# Table creation
+foo = (data_frame_1.filter(expr("""origin == 'SEA' and destination == 'SFO' and date like '01010%' and delay > 0""")))
+foo.createOrReplaceTempView("foo")
+foo.show()
