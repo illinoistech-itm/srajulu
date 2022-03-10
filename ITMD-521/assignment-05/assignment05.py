@@ -70,3 +70,8 @@ data_frame_1.show()
 foo = (data_frame_1.filter(expr("""origin == 'SEA' and destination == 'SFO' and date like '01010%' and delay > 0""")))
 foo.createOrReplaceTempView("foo")
 foo.show()
+
+spark.sql("""
+      SELECT a.City, a.State, f.date, f.delay, f.distance, f.destination
+      FROM foo f 
+      JOIN Airports_NA a ON a.IATA = f.origin """).show()
