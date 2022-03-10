@@ -28,4 +28,4 @@ data_frame = spark.read.format("jdbc")\
 .option("dbtable","temperatures")\
 .option("user","worker")\
 .option("password","cluster").load()
-data_frame
+data_frame.show()
