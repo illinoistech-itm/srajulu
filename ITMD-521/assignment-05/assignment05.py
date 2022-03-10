@@ -52,3 +52,16 @@ FilePath_AirportCodes = "/home/vagrant/LearningSparkV2/databricks-datasets/learn
 data_frame = (spark.read.format("csv").options(header="true", inferSchema="true", sep="\t").load(FilePath_AirportCodes))
 data_frame.createOrReplaceTempView("Airports_NA")
 data_frame.show()
+
+# Read airport-codes-na.txt file
+
+data_frame_1 = (spark.read
+.format("csv")
+.options(header="true")
+.load(FilePath_TripDelay))
+
+data_frame_1 = (data_frame_1
+.withColumn("delay", expr("CAST(delay as INT) as delay"))
+.withColumn("distance", expr("CAST(distance as INT) as distance")))
+data_frame_1.createOrReplaceTempView("departureDelays")
+data_frame_1.show()
