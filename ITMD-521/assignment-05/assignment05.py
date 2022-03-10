@@ -30,8 +30,8 @@ data_frame = spark.read.format("jdbc")\
 .option("password","cluster").load()
 data_frame.show()
 
-data_source.createOrReplaceTempView("Assignment-05-TempView")
-data_frame.createOrReplaceTempView("Assignment-05-TempView-B")
+data_source.createOrReplaceTempView("Assignment_05_TempView")
+data_frame.createOrReplaceTempView("Assignment_05_TempView-B")
 
 # Unoin of Tables
 DF_Union = data_source.union(data_frame)
