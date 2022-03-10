@@ -44,3 +44,7 @@ DF_Union_Query.createOrReplaceTempView("Union_Data_Temp")
 
 # Find all temperatures above 40 Celsius
 spark.sql("""SELECT ID,temperatures, filter(temperatures, t -> t > 40) as high FROM Union_Data_Temp""").show()
+
+# Assignment Part II
+FilePath_TripDelay = "/home/vagrant/LearningSparkV2/databricks-datasets/learning-spark-v2/flights/departuredelays.csv"
+FilePath_AirportCodes = "/home/vagrant/LearningSparkV2/databricks-datasets/learning-spark-v2/flights/airport-codes-na.txt"
