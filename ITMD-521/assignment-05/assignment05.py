@@ -21,3 +21,11 @@ data_source = spark.read.format("jdbc")\
 .option("password","cluster").load()
 data_source.show()
 data_source.printSchema()
+
+data_frame = spark.read.format("jdbc")\
+.option("url","jdbc:mysql://localhost/Assignment05b")\
+.option("driver","com.mysql.jdbc.Driver")\
+.option("dbtable","temperatures")\
+.option("user","worker")\
+.option("password","cluster").load()
+data_frame
