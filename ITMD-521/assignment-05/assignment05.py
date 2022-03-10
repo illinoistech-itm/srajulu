@@ -11,3 +11,13 @@ spark = SparkSession\
 .appName('Assignment05')\
 .config('spark.driver.extraClassPath', '/home/vagrant/spark/mysql-connector-java-8.0.28.jar')\
 .getOrCreate()
+
+
+df = spark.read.format("jdbc")\
+.option("url","jdbc:mysql://localhost/Assignment05")\
+.option("driver","com.mysql.jdbc.Driver")\
+.option("dbtable","temperatures")\
+.option("user","worker")\
+.option("password","cluster").load()
+df.show()
+df.printSchema()
