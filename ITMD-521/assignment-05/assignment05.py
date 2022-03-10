@@ -89,3 +89,10 @@ Column_Drop.show()
 # Column Renamed
 Column_Rename = Column_Drop.withColumnRenamed("status", "flight_status")
 Column_Rename.show()
+
+# Pivot data population
+spark.sql("""SELECT * FROM (
+SELECT destination, CAST(SUBSTRING(date, 0, 2) AS int) AS month, delay
+FROM departureDelays WHERE origin = 'SEA' ) 
+PIVOT ( CAST(AVG(delay) AS DECIMAL(4, 2)) AS AvgDelay, MAX(delay) AS MaxDelay FOR month IN (1 JAN, 2 FEB))
+ORDER BY destination""").show()
