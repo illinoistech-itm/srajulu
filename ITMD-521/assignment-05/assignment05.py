@@ -36,3 +36,4 @@ data_frame.createOrReplaceTempView("Assignment-05-TempView-B")
 # Unoin of Tables
 DF_Union = data_source.union(data_frame)
 DF_Union.show()
+DF_Union.createOrReplaceTempView("Union-Data-Frame")
