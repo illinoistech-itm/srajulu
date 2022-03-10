@@ -13,11 +13,11 @@ spark = SparkSession\
 .getOrCreate()
 
 
-df = spark.read.format("jdbc")\
+data_source = spark.read.format("jdbc")\
 .option("url","jdbc:mysql://localhost/Assignment05")\
 .option("driver","com.mysql.jdbc.Driver")\
 .option("dbtable","temperatures")\
 .option("user","worker")\
 .option("password","cluster").load()
-df.show()
-df.printSchema()
+data_source.show()
+data_source.printSchema()
