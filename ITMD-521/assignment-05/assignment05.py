@@ -30,4 +30,5 @@ data_frame = spark.read.format("jdbc")\
 .option("password","cluster").load()
 data_frame.show()
 
-data_source.createOrReplaceTempView("Assignment-05")
+data_source.createOrReplaceTempView("Assignment-05-TempView")
+data_frame.createOrReplaceTempView("Assignment-05-TempView-B")
