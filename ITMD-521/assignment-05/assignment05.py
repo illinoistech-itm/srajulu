@@ -40,4 +40,4 @@ DF_Union.createOrReplaceTempView("Union_Data_Frame")
 DF_Union_Query = DF_Union.select("ID",split(col("temperature"),",").alias("temperatures")).drop("temperature")
 DF_Union_Query.printSchema()
 DF_Union_Query.show()
-
+DF_Union_Query.createOrReplaceTempView("Union_Data_Temp")
