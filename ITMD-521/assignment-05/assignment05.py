@@ -41,3 +41,6 @@ DF_Union_Query = DF_Union.select("ID",split(col("temperature"),",").alias("tempe
 DF_Union_Query.printSchema()
 DF_Union_Query.show()
 DF_Union_Query.createOrReplaceTempView("Union_Data_Temp")
+
+# Find all temperatures above 40 Celsius
+spark.sql("""SELECT ID,temperatures, filter(temperatures, t -> t > 40) as high FROM Union_Data_Temp""").show()
