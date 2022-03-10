@@ -29,3 +29,5 @@ data_frame = spark.read.format("jdbc")\
 .option("user","worker")\
 .option("password","cluster").load()
 data_frame.show()
+
+data_source.createOrReplaceTempView("Assignment-05")
