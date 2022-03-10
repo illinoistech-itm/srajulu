@@ -31,7 +31,7 @@ data_frame = spark.read.format("jdbc")\
 data_frame.show()
 
 data_source.createOrReplaceTempView("Assignment_05_TempView")
-data_frame.createOrReplaceTempView("Assignment_05_TempView-B")
+data_frame.createOrReplaceTempView("Assignment_05_TempView_B")
 
 # Unoin of Tables
 DF_Union = data_source.union(data_frame)
