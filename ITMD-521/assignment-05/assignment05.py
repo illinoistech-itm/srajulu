@@ -75,3 +75,9 @@ spark.sql("""
       SELECT a.City, a.State, f.date, f.delay, f.distance, f.destination
       FROM foo f 
       JOIN Airports_NA a ON a.IATA = f.origin """).show()
+
+# Assignment Part III
+
+# Adding new column
+Column_1 = (foo.withColumn("status", expr("CASE WHEN delay <= 10 THEN 'On-time' ELSE 'Delayed' END")))
+Column_1.show()
