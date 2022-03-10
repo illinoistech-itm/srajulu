@@ -36,7 +36,7 @@ data_frame.createOrReplaceTempView("Assignment_05_TempView_B")
 # Unoin of Tables
 DF_Union = data_source.union(data_frame)
 DF_Union.show()
-DF_Union.createOrReplaceTempView("Union-Data-Frame")
+DF_Union.createOrReplaceTempView("Union_Data_Frame")
 DF_Union_Query = DF_Union.select("ID",split(col("temperature"),",").alias("temperatures")).drop("temperature")
 DF_Union_Query.printSchema()
 DF_Union_Query.show()
