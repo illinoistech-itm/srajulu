@@ -81,3 +81,7 @@ spark.sql("""
 # Adding new column
 Column_1 = (foo.withColumn("status", expr("CASE WHEN delay <= 10 THEN 'On-time' ELSE 'Delayed' END")))
 Column_1.show()
+
+# Columnn Dropped
+Column_Drop = Column_1.drop("delay")
+Column_Drop.show()
