@@ -48,3 +48,7 @@ spark.sql("""SELECT ID,temperatures, filter(temperatures, t -> t > 40) as high F
 # Assignment Part II
 FilePath_TripDelay = "/home/vagrant/LearningSparkV2/databricks-datasets/learning-spark-v2/flights/departuredelays.csv"
 FilePath_AirportCodes = "/home/vagrant/LearningSparkV2/databricks-datasets/learning-spark-v2/flights/airport-codes-na.txt"
+
+data_frame = (spark.read.format("csv").options(header="true", inferSchema="true", sep="\t").load(FilePath_AirportCodes))
+data_frame.createOrReplaceTempView("Airports_NA")
+data_frame.show()
