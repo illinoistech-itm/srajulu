@@ -31,7 +31,6 @@ if __name__ == "__main__":
     parquet_df.printSchema()
     
     #find all of the weather station ids that have registered days (count) of visibility (VisibilityDistance) less than 200 per year.
-    query_df = parquet_df.select("WeatherStation","VisibilityDistance","ObservationDate").where((col("VisibilityDistance") < 200)).groupBy("WeatherStation","VisibilityDistance",year("ObservationDate")).count().orderBy(desc(year("ObservationDate"))).count().orderBy(desc(year("ObservationDate")))
-    query_df.show()
+    parquet_df.select("WeatherStation", "VisibilityDistance", "ObservationDate").where(col("VisibilityDistance") < 200).groupBy("WeatherStation", "VisibilityDistance", year("ObservationDate")).count().orderBy(desc("VisibilityDistance")).show(10)
     
    
