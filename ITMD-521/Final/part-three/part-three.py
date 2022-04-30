@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     spark = SparkSession.builder.appName("suraj part three").config('spark.driver.host','192.168.172.45').config(conf=con).getOrCreate()
 
-    parquet_file = "s3a://srajulu/80.parquet"
+    parquet_file = "s3a://srajulu/" + sys.argv[1]
     spark.sql("set spark.sql.legacy.timeParserPolicy=LEGACY")
 
     parquet_df = spark.read.format("parquet").option("header", "true").option("inferSchema", "true").load(parquet_file)
