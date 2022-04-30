@@ -24,11 +24,14 @@ if __name__ == "__main__":
 
     spark = SparkSession.builder.appName("suraj part three").config('spark.driver.host','192.168.172.45').config(conf=con).getOrCreate()
 
-    parquet_file = "s3a://srajulu/" + sys.argv[1]
+    parquet_file = "s3a://srajulu/80.parquet"
     spark.sql("set spark.sql.legacy.timeParserPolicy=LEGACY")
 
     parquet_df = spark.read.format("parquet").option("header", "true").option("inferSchema", "true").load(parquet_file)
     parquet_df.printSchema()
     
+    #find all of the weather station ids that have registered days (count) of visibility (VisibilityDistance) less than 200 per year.
+    query_df = parquet_df.select("WeatherStation","VisibilityDistance","ObservationDate").where((col("VisibilityDistance") < 200)).groupBy("WeatherStation","VisibilityDistance",year("ObservationDate")).count().orderBy(desc(year("ObservationDate"))).count().orderBy(desc(year("ObservationDate")))
+    query_df.show()
     
    
