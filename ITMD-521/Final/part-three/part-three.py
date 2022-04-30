@@ -14,8 +14,11 @@ if __name__ == "__main__":
         print("Usage: part-three.py <file> ", file=sys.stderr)
         sys.exit(-1)
 
-    conf = SparkConf()
-    conf.set('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:3.2.0')
-    conf.set('spark.hadoop.fs.s3a.aws.credentials.provider', 'org.apache.hadoop.fs.s3a.AnonymousAWSCredentialsProvider')
+    config = SparkConf()
+    config.set('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:3.2.0')
+    config.set('spark.hadoop.fs.s3a.aws.credentials.provider', 'org.apache.hadoop.fs.s3a.AnonymousAWSCredentialsProvider')
     
-    
+    config.set('spark.hadoop.fs.s3a.access.key', os.getenv('SECRETKEY'))
+    config.set('spark.hadoop.fs.s3a.secret.key', os.getenv('ACCESSKEY'))
+    config.set("spark.hadoop.fs.s3a.endpoint", "http://192.168.172.50:9000")
+   
