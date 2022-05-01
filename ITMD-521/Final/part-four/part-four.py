@@ -36,6 +36,8 @@ if __name__ == "__main__":
     parquetdatafrm = spark.read.format("parquet").option("header", "true").option("inferSchema", "true").load(parquet_file)
     parquetdatafrm.printSchema()
 
+    parquetdatafrm.createOrReplaceTempView("parquet_dataframe_80_view")
+
     # query 1
     #query_parquet_dataframe = (parquetdatafrm.withColumn("ForObsDate", to_timestamp(col("ObservationDate"), "MM/dd/yyyy")).drop("ObservationDate"))
 
@@ -53,11 +55,9 @@ if __name__ == "__main__":
     #query_parquet_dataframe.select(stddev("AirTemperature")).show(10)
 
     #query 5
-    #The weather station ID that has the lowest recorded temperature per year.
     lowest_dataframe_80 = spark.sql('select max(WeatherStation) as WeatherStation, YEAR(ObservationDate), min(AirTemperature) from parquet_dataframe_50_view GROUP BY YEAR(ObservationDate) ORDER BY min(AirTemperature)')
     lowest_dataframe_80.show()
 
     #query 6
-    # The weather station ID that has the highest recorded temperature per year.
     highest_dataframe_80 = spark.sql('select max(WeatherStation) as WeatherStation, YEAR(ObservationDate), max(AirTemperature) from parquet_dataframe_50_view GROUP BY YEAR(ObservationDate) ORDER BY max(AirTemperature)')
     lowest_dataframe_80.show()
