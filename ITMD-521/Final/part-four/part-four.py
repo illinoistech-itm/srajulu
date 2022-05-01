@@ -33,21 +33,21 @@ if __name__ == "__main__":
     parquet_file = "s3a://srajulu/80.parquet"
     spark.sql("set spark.sql.legacy.timeParserPolicy=LEGACY")
 
-    parquet_df = spark.read.format("parquet").option("header", "true").option("inferSchema", "true").load(parquet_file)
-    parquet_df.printSchema()
-    
-    #1. find all of the weather station ids that have registered days (count) of visibility (VisibilityDistance) less than 200 per year.
-    query1_parquet_df = (parquet_df.withColumn("UpdatedObservationDate", to_timestamp(col("ObservationDate"), "MM/dd/yyyy")).drop("ObservationDate"))
+    parquetdatafrm = spark.read.format("parquet").option("header", "true").option("inferSchema", "true").load(parquet_file)
+    parquetdatafrm.printSchema()
+
+    # query 1
+    query_parquet_dataframe = (parquetdatafrm.withColumn("ForObsDate", to_timestamp(col("ObservationDate"), "MM/dd/yyyy")).drop("ObservationDate"))
 
     # query 1 - Count the number of records
-    query1_parquet_df.select("WeatherStation", "VisibilityDistance", "AirTemperature", month("UpdatedObservationDate"), year("UpdatedObservationDate")).where(month("UpdatedObservationDate") == 2).distinct().show(20)
+    query_parquet_dataframe.select("WeatherStation", "VisibilityDistance", "AirTemperature", month("ForObsDate"), year("ForObsDate")).where(month("ForObsDate") == 2).distinct().show(20)
 
-    # query 2 - Average air temperature
-    avg_air_temp_df = query1_parquet_df.filter(month("NewObservationDate") == 2).groupBy("AirTemperature").count().orderBy(desc("count"))
-    avg_air_temp_df.select(mean("AirTemperature")).show(10)
+    #Query 2
+    avg_new_parquet_dataframe = query_parquet_dataframe.filter(month("ForObsDate") == 2).groupBy("AirTemperature").count().orderBy(desc("count"))
+    avg_new_parquet_dataframe.select(mean("AirTemperature")).show(10)
 
     # query 3 - Median air temperature
-    query1_parquet_df.groupBy("WeatherStation").agg(func.percentile_approx("AirTemperature", 0.5).alias("MedianAirTemperature)")).show(10)
+    query_parquet_dataframe.groupBy("WeatherStation").agg(func.percentile_approx("AirTemperature", 0.5).alias("MedianAirTemperature)")).show(10)
    
-     # query 4 -  Standard deviation air temperature
-    query1_parquet_df.select(stddev("AirTemperature")).show(10)
+    # query 4 -Standard deviation air temperature
+    query_parquet_dataframe.select(stddev("AirTemperature")).show(10)
