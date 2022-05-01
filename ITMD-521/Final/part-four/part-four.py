@@ -8,9 +8,12 @@ from pyspark.sql.functions import col, mean, desc
 from pyspark.sql.functions import year
 from pyspark.sql.functions import *
 from pyspark.sql.functions import to_timestamp
+from pyspark.sql.functions import stddev
+import pyspark.sql.functions as func
 
 import os
 import sys
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 1:
@@ -42,3 +45,9 @@ if __name__ == "__main__":
     # query 2 - Average air temperature
     avg_air_temp_df = query1_parquet_df.filter(month("NewObservationDate") == 2).groupBy("AirTemperature").count().orderBy(desc("count"))
     avg_air_temp_df.select(mean("AirTemperature")).show(10)
+
+    # query 3 - Median air temperature
+    query1_parquet_df.groupBy("WeatherStation").agg(func.percentile_approx("AirTemperature", 0.5).alias("MedianAirTemperature)")).show(10)
+   
+     # query 4 -  Standard deviation air temperature
+    query1_parquet_df.select(stddev("AirTemperature")).show(10)
