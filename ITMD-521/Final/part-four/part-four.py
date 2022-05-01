@@ -28,7 +28,7 @@ if __name__ == "__main__":
     con.set('spark.hadoop.fs.s3a.secret.key', os.getenv('ACCESSKEY'))
     con.set("spark.hadoop.fs.s3a.endpoint", "http://192.168.172.50:9000")
 
-    spark = SparkSession.builder.appName("suraj part three").config('spark.driver.host','192.168.172.45').config(conf=con).getOrCreate()
+    spark = SparkSession.builder.appName("suraj part four").config('spark.driver.host','192.168.172.45').config(conf=con).getOrCreate()
 
     parquet_file = "s3a://srajulu/80.parquet"
     spark.sql("set spark.sql.legacy.timeParserPolicy=LEGACY")
@@ -37,17 +37,27 @@ if __name__ == "__main__":
     parquetdatafrm.printSchema()
 
     # query 1
-    query_parquet_dataframe = (parquetdatafrm.withColumn("ForObsDate", to_timestamp(col("ObservationDate"), "MM/dd/yyyy")).drop("ObservationDate"))
+    #query_parquet_dataframe = (parquetdatafrm.withColumn("ForObsDate", to_timestamp(col("ObservationDate"), "MM/dd/yyyy")).drop("ObservationDate"))
 
     # query 1 - Count the number of records
-    query_parquet_dataframe.select("WeatherStation", "VisibilityDistance", "AirTemperature", month("ForObsDate"), year("ForObsDate")).where(month("ForObsDate") == 2).distinct().show(20)
+    #query_parquet_dataframe.select("WeatherStation", "VisibilityDistance", "AirTemperature", month("ForObsDate"), year("ForObsDate")).where(month("ForObsDate") == 2).distinct().show(20)
 
     #Query 2
-    avg_new_parquet_dataframe = query_parquet_dataframe.filter(month("ForObsDate") == 2).groupBy("AirTemperature").count().orderBy(desc("count"))
-    avg_new_parquet_dataframe.select(mean("AirTemperature")).show(10)
+    #avg_new_parquet_dataframe = query_parquet_dataframe.filter(month("ForObsDate") == 2).groupBy("AirTemperature").count().orderBy(desc("count"))
+    #avg_new_parquet_dataframe.select(mean("AirTemperature")).show(10)
 
     # query 3 - Median air temperature
-    query_parquet_dataframe.groupBy("WeatherStation").agg(func.percentile_approx("AirTemperature", 0.5).alias("MedianAirTemperature)")).show(10)
+    #query_parquet_dataframe.groupBy("WeatherStation").agg(func.percentile_approx("AirTemperature", 0.5).alias("MedianAirTemperature)")).show(10)
    
     # query 4 -Standard deviation air temperature
-    query_parquet_dataframe.select(stddev("AirTemperature")).show(10)
+    #query_parquet_dataframe.select(stddev("AirTemperature")).show(10)
+
+    #query 5
+    #The weather station ID that has the lowest recorded temperature per year.
+    lowest_dataframe_80 = spark.sql('select max(WeatherStation) as WeatherStation, YEAR(ObservationDate), min(AirTemperature) from parquet_dataframe_50_view GROUP BY YEAR(ObservationDate) ORDER BY min(AirTemperature)')
+    lowest_dataframe_80.show()
+
+    #query 6
+    # The weather station ID that has the highest recorded temperature per year.
+    highest_dataframe_80 = spark.sql('select max(WeatherStation) as WeatherStation, YEAR(ObservationDate), max(AirTemperature) from parquet_dataframe_50_view GROUP BY YEAR(ObservationDate) ORDER BY max(AirTemperature)')
+    lowest_dataframe_80.show()
