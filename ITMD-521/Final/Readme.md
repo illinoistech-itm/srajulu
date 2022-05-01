@@ -1,108 +1,77 @@
-# ITMD 521 Final Project
+# Final Project
 
-This will be the description and deliverable for the final project for ITMD 521
+## Part 1
+  - Steps to excute part 1
+      - Login into spark server using credentials: `ssh -i ~/.ssh/id_ed25519_srajulu-spark-server  srajulu@192.168.172.45`
+      - Navigate to the folder `/home/srajulu/srajulu/ITMD-521/Final/part-one`
+      - Run these three commands to run `SGR-part-one.py` to convert the file to csv, json, and parquet files:
+        - `nohup spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --driver-memory 10G --executor-memory 12G --executor-cores 6 SGR-part-one.py 80.txt 80.csv csv &`
 
-## General Notes
+        - `nohup spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --driver-memory 10G --executor-memory 12G --executor-cores 6 SGR-part-one.py 80.txt 80.parquet parquet &`
 
-* All commits and code must be placed in the private repo assigned at the beginning of the semester
-  * Under the folder: `itmd-521` > `final`
-  * Include a **Readme.md** file in the `final` directory with instructions and commands to run each of your scripts
-  * Create a sub-folder: `part-one`, `part-two`, `part-three`, `part-four`
-  * In each sub-folder provide the PySpark `.py` files to accomplish the requirements
-  * Create a Readme.md with the results (screenshot), if applicable for the output of a section
-  * I will run this to check your work and compare output
-* Clone/pull you code to the spark edge server account you were given access to
-* Clone via SSH key - as demonstrated in the video prepared 04/19
+        - `nohup spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --driver-memory 10G --executor-memory 12G --executor-cores 6 SGR-part-one.py 80.txt 80.json json &`
+      
+      - Run this command to run the `lz4comp.py`
+        -  `nohup spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --driver-memory 10G --executor-memory 10G --executor-cores 6 lz4comp.py 80.txt 80.csv.lz4 csv > lz4.log &`
+      
+      ![Minio bucket](./media/part-1/bucket%20.png "Minio bucket")
 
-* Make use of any of the sample code provided in the [jhajek repo](https://github.com/illinoistech-itm/jhajek/tree/master/itmd-521/example-code "jhajek sample code repo")
-* Make extensive use of the [PySpark API documentation](https://spark.apache.org/docs/latest/api/python/index.html "PySpark API documentation") and the textbook
+      
+## Part 2
+  - Navigate to the folder `/home/srajulu/srajulu/ITMD-521/Final/part-two`
 
-### Part One
+  - Command: `spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --driver-memory 10G --executor-memory 2G --executor-cores 6 csv-read-part-two.py`
+  - CSV ![CSV Read](./media/part-2/csv-read-part-2.png "CSV Read")
 
-The first part of the assignment you will be doing data engineering by converting raw text records, parsing them and saving them in many different formats in our Minio Object storage system.
+  - Command: `spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --driver-memory 10G --executor-memory 2G --executor-cores 6 json-read-part-two.py`
+  - JSON ![JSON Read](./media/part-2/json-read-part-2.png "JSON Read")
 
-* Use the raw data set you were assigned
-* Use this syntax for each job run, for example:
-  * ```spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --driver-memory 10G --executor-memory 10G --executor-cores 2 ncdc.py 20.txt 20.csv csv```
-* Using the sample code create a PySpark application to parse the raw datasource assigned into 5 edited outputs and name the results the same prefix as the source (20.txt becomes 20.csv for example)
-  * csv
-  * json
-  * csv with lz4 compression
-  * parquet
-  * csv with a single partition (need to adjust filename to not overwrite the first csv requirement)
-    * Name this for example:  20-single-part.csv
+  - Command: `spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --driver-memory 10G --executor-memory 2G --executor-cores 6 parquet-read-part-two.py`
+  - Parquet ![CSV Read](./media/part-2/parquet-read-part-2.png "Parquet Read")
 
-### Part Two
+  - Command:  `nohup spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --jars /opt/spark/jars/mysql-connector-java-8.0.28.jar --driver-memory 8G --executor-memory 2G --executor-cores 6 Mariadb.py > SurajMariaDBlog.log &`
+  - MariaDB ![CSV Read](./media/part-2/mariadb.png "MariaDB")
 
-This part you will read the datasets you created back into your PySpark application and create schemas where necessary.
-
-* Read your partitioned .csv into a DataFrame named: `csvdf`
-  * Create a schema based on the sample given in the jhajek sample code, `minio-csv.py`
-  * Show the first 10 records and print the schema
-* Read your partitioned .json into a DataFrame named: `jsondf`
-  * Create a schema based on the sample given in the jhajek sample code, `minio-csv.py`
-  * Show the first 10 records and print the schema
-* Read your partitioned .parquet into a DataFrame named: `parquetdf`
-  * Show the first 10 records and print the schema
-* Connect to the MariaDB server located at `192.168.172.31`
-  * Connect to the database `ncdc` and table `fifties`
-  * Show the first 10 records and print the schema
-  * Username: worker
-  * Password: cluster
-* MySQL Connector/J is located at:  `--jars /opt/spark/jars/mysql-connector-java-8.0.28.jar`
-* Connect using the parameters like this:
-
-```python
-(DF.read.format("jdbc").option("url","jdbc:mysql://192.168.172.31:3306/ncdc").option("driver","com.mysql.cj.jdbc.Driver").option("dbtable","fifties").option("user","worker").option("password", "cluster").load())
-```
-
-### Part-Three
-
-In this section you will execute the same command 3 times and modify run time parameters and make note of the execution times and explain what the adjustments did. To do this create a PySpark application to read your prescribed decade .parquet file data and find all of the weather station ids that have registered days (count) of visibility less than 200 per year.
-
-Using these parameters:
-
-* `--driver-memory`
-* `--executor-memory`
-* `--executor-cores`
-* `--total-executor-cores`
-
+## Part 3
 * First run
   * `--driver-memory 2G --executor-memory 4G --executor-cores 1 --total-executor-cores 20`
-  * Your Expectation:
-  * Your results/runtime:
+  * Expectation: The total number of cores from all executors is set to 20, each executor has to allocate 1 core, driver memory to 2G, and per executor memory to 4G. The performance of the application is high when we have limited number of cores and enough to process the application
+  * Results/runtime: `7 min`
+  * Command : `spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --driver-memory 2G --executor-memory 4G --executor-cores 1 --total-executor-cores 20 part-three.py`
+  * ![Output](./media/part-3/3.1-output.png "Output")
+
 * Second run
   * `--driver-memory 10G --executor-memory 12G --executor-cores 2`
-  * Your Expectation:
-  * Your results/runtime:
+  * Expectation: Each executor has to allocate 2 cores, and 12G of memory per executor. The performance of the application is based on the memory per executor and there's no limit on the total number of cores. The data processing speed is faster compared to the first run.
+  * Results/runtime: `10 min`
+  * Command : `spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --driver-memory 10G --executor-memory 12G --executor-cores 2 part-three.py`
+  * ![Output](./media/part-3/3.2%20output.png "Output")
+
 * Third run
   * `--driver-memory 4G --executor-memory 4G --executor-cores 2 --total-executor-cores 40`
-  * Your Expectation:
-  * Your results/runtime:
+  * Expectation: Fach executor with 2 cores and total number of cores from all executors is set to 40. The performance of the application is comparatively slower than the other two as increasing the number of fora cores with lower memorv will decrease the processing sneed
+  * Results/runtime: `6 min`
+  * Command : `spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --driver-memory 4G --executor-memory 4G --executor-cores 2 --total-executor-cores 40 part-three.py`
+  * ![Output](./media/part-3/3.3%20output.png "Output")
 
-### Part Four
+## Part 4
 
-This part you will do some basic analytics using the Spark SQL or the native PySpark libraries. You will use the assigned dataset that you have already processed into the parquet format (load the .parquet file).  Use the Spark optimizations discussed in the previous section to optimize task run time -- resist the temptation to assign all cluster resources - use the first run options as a baseline
+  - Command: `spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --driver-memory 2G --executor-memory 4G --executor-cores 1 --total-executor-cores 20 part-four.py`
+  - Query 1:
+  - Output : ![Output](./media/part-4/query-1.png "Output")
 
-* Using date ranges, select all records for the month of February for each year in the decade, find the following:
-  * Count the number of records
-  * Average air temperature
-  * Median air temperature
-  * Standard Deviation of air temperature
-* Using the entire decade dataset, find the following:
-  * The weather station ID that has the lowest recorded temperature per year
-  * The weather station ID that has the highest recorded temperature per year
-  * You may have to add filters to remove records that have values that are legal but not real -- such as 9999
+  - Query 2:
+  - Output : ![Output](./media/part-4/query-2.png "Output")
 
-### Final Note
+  - Query 3:
+  - Output : ![Output](./media/part-4/query-3.png "Output")
 
-These jobs might take a while to process, potentially hours--**Don't wait!**.  You can execute jobs and add them to the queue -- when resources free up, your job will execute.  You can submit a job to execute without having to keep your computer open all the time by using the `nohup` command, put `nohup` in front of your command and a `&` at the end will background and allow you to disconnect from the spark edge server (not hang up).
+  - Query 4:
+  - Output : ![Output](./media/part-4/query-4.png "Output")
 
-```nohup spark-submit --master spark://192.168.172.23:7077 --packages "org.apache.hadoop:hadoop-aws:3.2.2" --driver-memory 2G --executor-memory 4G --executor-cores 1 ncdc-single-partition-csv.py 50.txt 50.csv csv &```
+  - Query 5:
+  - Output : ![Output](./media/part-4/query-5.png "Output")
 
-## Due Date and Finals Presentation
+  - Query 6:
+  - Output : ![Output](./media/part-4/query-6.png "Output")
 
-* Submit the URL to your GitHub account to Blackboard by 11:59 pm, Saturday 04/30
-  * Worth 80 points
-* Thursday May 5th, during the scheduled final exam period you will demonstrate the results of `part-three` and give a verbal explanation (Use the textbook as your source for explanations)
-  * Worth 20 points
