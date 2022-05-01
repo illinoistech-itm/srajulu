@@ -34,11 +34,7 @@ if __name__ == "__main__":
     parquet_df.printSchema()
     
     #1. find all of the weather station ids that have registered days (count) of visibility (VisibilityDistance) less than 200 per year.
-    query1 = parquet_file.withColumnRenamed("WeatherStationIds", "WeatherStation")
-    query1_df = (query1.withColumn("NewObservationDate", to_timestamp(col("ObservationDate"), "MM/dd/yyyy")).drop("ObservationDate"))
+    query1_parquet_df = (parquet_df.withColumn("UpdatedObservationDate", to_timestamp(col("ObservationDate"), "MM/dd/yyyy")).drop("ObservationDate"))
 
-    # query 1
-    query1_df.filter(month("New-Observation-Date") == 2).groupBy(month('New-Observation-Date')).count().orderBy('count', ascending=False).show()
-    
-    
-   
+    # query 1 - Count the number of records
+    query1_parquet_df.select("WeatherStation", "VisibilityDistance", "AirTemperature", month("UpdatedObservationDate"), year("UpdatedObservationDate")).where(month("UpdatedObservationDate") == 2).distinct().show(20)
