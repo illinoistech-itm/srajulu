@@ -4,7 +4,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import year
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
-from pyspark.sql.functions import col
+from pyspark.sql.functions import col, mean, desc
 from pyspark.sql.functions import year
 from pyspark.sql.functions import *
 from pyspark.sql.functions import to_timestamp
@@ -38,3 +38,7 @@ if __name__ == "__main__":
 
     # query 1 - Count the number of records
     query1_parquet_df.select("WeatherStation", "VisibilityDistance", "AirTemperature", month("UpdatedObservationDate"), year("UpdatedObservationDate")).where(month("UpdatedObservationDate") == 2).distinct().show(20)
+
+    # query 2 - Average air temperature
+    avg_air_temp_df = query1_parquet_df.filter(month("NewObservationDate") == 2).groupBy("AirTemperature").count().orderBy(desc("count"))
+    avg_air_temp_df.select(mean("AirTemperature")).show(10)
