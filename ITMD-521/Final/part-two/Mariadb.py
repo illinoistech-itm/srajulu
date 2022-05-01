@@ -20,7 +20,7 @@ if __name__ == "__main__":
     conf.set("spark.hadoop.fs.s3a.endpoint", "http://192.168.172.50:9000")
 
 
-    spark = SparkSession.builder.appName('MariaDbconnection').config('spark.driver.extraClassPath', '/home/srajulu/srajulu/mysql-connector-java-8.0.29/mysql-connector-java-8.0.29.jar').config('spark.driver.host','192.168.172.45').config(conf=conf).getOrCreate()
+    spark = SparkSession.builder.appName('MariaDb part 2 ').config('spark.driver.extraClassPath', '/home/srajulu/srajulu/mysql-connector-java-8.0.29/mysql-connector-java-8.0.29.jar').config('spark.driver.host','192.168.172.45').config(conf=conf).getOrCreate()
 
 
 # Reading the ncdc database into a DataFrame refering the table name fifties #.option("dbtable","fifties")\
